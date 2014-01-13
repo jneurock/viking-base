@@ -7,7 +7,7 @@
   <property name="project.version" value="0.0.1" />
 
   <!-- Our custom properties file. These properties will take precedence over those defined in the build folder. -->
-  <property file="${basedir}/bower_components/hs_ui_core/build-custom/config/build.properties" />
+  <property file="${basedir}/bower_components/viking_base/build-custom/config/build.properties" />
 
   <!-- Load default property files -->
   <property file="${dir.build}/config/project.properties" />
