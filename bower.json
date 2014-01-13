@@ -1,0 +1,19 @@
+{
+  "name": "viking_base",
+  "version": "0.0.1",
+  "ignore": [
+    "./build.xml",
+    ".gitignore",
+    "bower.json",
+    "pom.xml",
+    "target"
+  ],
+  "dependencies": {
+    "ember-starter-kit": "1.0.0",
+    "foundation": "4.3.2",
+    "handlebars.js": "1.0.0",
+    "jquery": "1.10.2",
+    "modernizr": "2.6.2",
+    "respond": "1.4.1"
+  }
+}

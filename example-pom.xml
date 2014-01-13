@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- Add groupId and artifactId -->
+  <groupId>com.mycompany.project_name_here</groupId>
+  <artifactId>project_name_here</artifactId>
+
+  <version>0.0.1</version>
+
+  <!-- Add name -->
+  <name>Project Name Here</name>
+
+  <properties>
+    <ant_clean>clean</ant_clean>
+    <ant_target>text</ant_target>
+    <skipTests>true</skipTests>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>debug</id>
+      <properties>
+        <ant_target>debug</ant_target>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>debugdocs</id>
+      <properties>
+        <ant_target>debugdocs</ant_target>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>docs</id>
+      <properties>
+        <ant_clean>noclean</ant_clean>
+        <ant_target>docs</ant_target>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>handlebars</id>
+      <properties>
+        <ant_clean>noclean</ant_clean>
+        <ant_target>handlebars</ant_target>
+      </properties>
+    </profile>
+  </profiles>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>${basedir}</directory>
+      </resource>
+    </resources>
+
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <id>ant-build</id>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <echo message="Starting Ant build..." />
+                
+                <ant antfile="${basedir}/bower_components/viking_base/build-custom/build.xml">
+                  <target name="${ant_clean}" />
+                  <target name="${ant_target}" />
+                </ant>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

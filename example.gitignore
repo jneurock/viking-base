@@ -1,0 +1,26 @@
+# Build output #
+################
+.sass-cache/
+intermediate/
+publish/
+target/
+.metadata
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+
+# Icon must end with two \r #
+Icon
+
+
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# JSDoc #
+#########
+docs/
