@@ -71,7 +71,7 @@ Some target:
 It is important to note that the build command should be executed from the project root. If the build has completed successfuly, you should have a publish directory containing your project output.
 
 # Why Would I Use This?
-If I use Node and/or Compass and/or Grunt, etc., why would I use this? This platform is meant for developers that need to deploy their applications with build tools, e.g., Jenkins or who might work in a company that develops Java applications that want a more modern front-end stack than . This platform might not be suited for developers that already include Foundation or Ember in their projects through some other method.
+If I use Node and/or Compass and/or Grunt, etc., why would I use this? This platform is meant for developers that need to deploy their applications with build tools, e.g., Jenkins or who might work in a company that develops Java applications that want a more modern front-end stack than JSP can facilitate. This platform might not be suited for developers that already include Foundation or Ember in their projects through some other method.
 
 # References
 * [HTML5 Boilerplate](http://html5boilerplate.com/)
