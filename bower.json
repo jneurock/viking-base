@@ -2,7 +2,6 @@
   "name": "viking_base",
   "version": "0.0.1",
   "ignore": [
-    "./build.xml",
     ".gitignore",
     "bower.json",
     "pom.xml",
