@@ -49,6 +49,13 @@ var
     // Require the file system module
     fs = require('fs'),
     i = 0,
+    // An array of directories to make
+    makeDirs = [
+      'css',
+      'js',
+      'js/app',
+      'js/templates'
+    ],
     sourceFile = '',
     targetFile = '';
 
@@ -64,36 +71,47 @@ function copyFile(source, target) {
     console.error(err);
   });
 
-  writeFile = fs.createWriteStream(target);
+  // Check if target file exists
+  if (!fs.existsSync(target)) {
 
-  // Try to create the target file
-  writeFile.on('error', function(err) {
+    writeFile = fs.createWriteStream(target);
 
-    console.error(err);
-  });
+    // Try to create the target file
+    writeFile.on('error', function(err) {
 
-  writeFile.on('close', function(ex) {
+      console.error(err);
+    });
 
-    console.info('  Copied: ' + source + ' to ' + target);
-  });
+    writeFile.on('close', function(ex) {
 
-  // Read the contents of the source file into the target file
-  readFile.pipe(writeFile);
+      console.info('  Copied: ' + source + ' to ' + target);
+    });
+
+    // Read the contents of the source file into the target file
+    readFile.pipe(writeFile);
+
+  } else {
+
+    console.warn('  File exists: ' + target + '. Did not copy.');
+  }
 }
 
 console.info('Creating base project directories...');
 
 // Create some needed folders
-fs.mkdir('css');
-console.info('  css');
+for (i = 0; i < makeDirs.length; i++) {
 
-fs.mkdir('img');
-console.info('  img');
+  if (!fs.existsSync(target)) {
+ 
+    fs.mkdir(makeDirs[i]);
 
-fs.mkdir('js');
-fs.mkdir('js/app');
-fs.mkdir('js/templates');
-console.info('  js, js/app, js/templates');
+    console.info('  ' + makeDirs[i]);
+
+  } else {
+
+    console.warn('  Directory exists: ' + makeDirs[i] + '. Did not create.');
+  }
+}
 
 console.info('Copying example files...');
 
