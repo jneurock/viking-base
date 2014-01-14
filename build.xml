@@ -1,13 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 <project name="Viking Base" default="build" basedir=".">
-
-  <!-- Project name and version. Should match Maven POM. -->
-  <property name="project.name" value="viking_base" />
-  <property name="project.version" value="0.0.1" />
+  <xmlproperty file="${basedir}/pom.xml" collapseAttributes="true" />
 
   <target name="jar">
     <delete dir="${basedir}/target" />
-    <jar destfile="${basedir}/target/${project.name}-${project.version}.jar" basedir="${basedir}" includes="**" excludes="target/**" />
+    <jar destfile="${basedir}/target/${project.artifactId}-${project.version}.jar" basedir="${basedir}" includes="**" excludes="target/**" />
   </target>
 </project>

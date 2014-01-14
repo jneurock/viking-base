@@ -1,10 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 <project name="Viking Base Build" default="build" basedir="../../../">
-
-  <!-- Project name and version. Should match Maven POM. -->
-  <property name="project.name" value="project_name_here" />
-  <property name="project.version" value="0.0.1" />
+  <xmlproperty file="${basedir}/pom.xml" collapseAttributes="true" />
 
   <!-- Our custom properties file. These properties will take precedence over those defined in the build folder. -->
   <property file="${basedir}/bower_components/viking_base/build-custom/config/build.properties" />
@@ -438,7 +435,7 @@
   <!-- Jar the project -->
   <target name="jar">
     <delete dir="${basedir}/target" />
-    <jar destfile="${basedir}/target/${project.name}-${project.version}.jar" basedir="${basedir}" includes="**" excludes="target/**" />
+    <jar destfile="${basedir}/target/${project.artifactId}-${project.version}.jar" basedir="${basedir}" includes="**" excludes="target/**" />
   </target>
 
   <!-- Precompile Handlebars templates -->
