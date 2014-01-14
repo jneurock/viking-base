@@ -28,7 +28,7 @@ cd my-project
 bower install viking-base
 
 # Run the install script
-node bower_components/viking_base/example-install.js
+node bower_components/viking_base/example-install
 ```
 
 After running the install script you will be ready to build. Out-of-the box your project will build a Hello Vikings demo application.
@@ -54,6 +54,7 @@ Some target:
 ## Building with Ant
 `ant -f bower_components/viking_base/build-custom <optional-target-name>`
 
+### When the Build Is Done
 It is important to note that the build command should be executed from the project root. If the build has completed successfuly, you should have a publish directory containing your project output.
 
 ## Customizing the build

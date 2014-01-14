@@ -104,6 +104,10 @@ for (i = 0; i < copyFiles.length; i++) {
   targetFile = copyFiles[i].to;
 
   copyFile(sourceFile, targetFile);
-}
 
-console.info('Your Viking Base project is now ready to build');
+  // End of loop
+  if (i === copyFiles.length) {
+
+    console.info('Your Viking Base project is now ready to build');
+  }
+}
