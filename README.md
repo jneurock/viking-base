@@ -6,13 +6,26 @@ The package exists to accomplish a few main goals:
 * Generate production or development output with the H5BP Ant Build Script
 * Manage platform dependencies with Bower
 
+Currently, the package consists of:
+
+* Ember 1.0
+* Handlebars 1.0
+* Foundation 4.3.2
+* HTML5 Boilerplate Ant Build Script 1.1.2
+* HTML5 Boilerplate 4.1
+* jQuery 1.10.2
+* Modernizr 2.6.2
+* Respond 1.4.1
+
+The next version of the package aims to consist of the latest versions of each dependency, e.g., Foundation 5 and Ember 1.3.
+
 # System Requirements
-The latest versions of the following are recommended.
+The project is known to work with the following:
 
 * Java 1.6+
-* Maven or Ant
-* Node.js
-* Bower
+* Maven 3.0.x+ or Ant 1.9.x+
+* Node.js 0.10.7+
+* Bower 1.2.8+
 
 # Setting up a New Project
 
@@ -33,13 +46,15 @@ node bower_components/viking-base/example-install
 After running the install script you will be ready to build. Out-of-the box your project will build a Hello Vikings demo application.
 
 # Building Your Project
-You can build your project with Maven or Ant. There are a number of build targets to choose from:
+You can build your project with Maven or Ant. The build command should be executed from the project root. There are a number of build targets to choose from:
 
 * No target - Will start a production build
 * debug - Does not concatinate or minify JavaScript files for debugging
 * debugdocs - Same as above but also generates JSDoc documentation
 * docs - Generates JSDoc documentation only
-* handlebars - Compiles Handlebars templates only and copies them to the publish directory
+* handlebars - If you just need to publish updates to your Handlebars templates
+
+When the build is finished, you should have a publish directory containing your project output.
 
 ## Building with Maven
 If you are using Maven to build your project you need to add build targets by using the "-P" flag. A build target is optional.
@@ -52,9 +67,6 @@ Some target:
 
 ## Building with Ant
 `ant -f bower_components/viking-base/build-custom <optional-target-name>`
-
-## When the Build Is Done
-It is important to note that the build command should be executed from the project root. If the build has completed successfuly, you should have a publish directory containing your project output.
 
 ## Skipping the Jar Target
 By default, the build will Jar the contents of your project. If you don't want this behavior you can set the "jarPhase" property to "never" from the command line:
