@@ -15,6 +15,7 @@
   <properties>
     <ant_clean>clean</ant_clean>
     <ant_target>text</ant_target>
+    <jarPhase>package</jarPhase>
     <skipTests>true</skipTests>
   </properties>
 
@@ -78,6 +79,18 @@
                 </ant>
               </target>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <executions>
+          <execution>
+            <id>default-jar</id>
+            <phase>${jarPhase}</phase>
           </execution>
         </executions>
       </plugin>

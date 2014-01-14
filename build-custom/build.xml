@@ -53,9 +53,9 @@
   *************************************************
   -->
   
-  <target name="-text.production" depends="version, -intro, -mkdirs, -js.ember.handlebars, -js.all.minify, -js.main.concat, -js.scripts.concat, -css, -usemin, -htmlclean, -copy"/>
-  <target name="-build.debug" depends="version, -intro, -mkdirs, -js.ember.handlebars, -css, -usemin, -htmlclean, -copyall" />
-  <target name="-build.debugdocs" depends="version, -intro, -mkdirs, -js.ember.handlebars, -css, -usemin, -htmlclean, -copyall, -jsdoc3" />
+  <target name="-text.production" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -js.all.minify, -js.main.concat, -js.scripts.concat, -css, -usemin, -htmlclean, -copy"/>
+  <target name="-build.debug" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -css, -usemin, -htmlclean, -copyall" />
+  <target name="-build.debugdocs" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -css, -usemin, -htmlclean, -copyall, -jsdoc3" />
   <target name="-build.docs" depends="version, -jsdoc3" />
   <target name="-build.handlebars" depends="version, -js.ember.handlebars.copy" />
 
@@ -432,8 +432,15 @@
   *************************************************
   -->
   
+  <!-- Check if Jar should be created -->
+  <target name="checkJarPhase">
+    <condition property="doJar">
+      <equals arg1="${jarPhase}" arg2="package" />
+    </condition>
+  </target>
+
   <!-- Jar the project -->
-  <target name="jar">
+  <target name="jar" depends="checkJarPhase" if="doJar">
     <delete dir="${basedir}/target" />
     <jar destfile="${basedir}/target/${project.artifactId}-${project.version}.jar" basedir="${basedir}" includes="**" excludes="target/**" />
   </target>
