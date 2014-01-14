@@ -13,6 +13,9 @@
   <!-- Import the original build xml from the build folder -->
   <import file="${basedir}/${dir.build}/build.xml" />
 
+  <!-- Jar phase default -->
+  <property name="jarPhase" value="package" />
+
   <!-- Debug target -->
   <target name="debug">
     <echo message="Building a Debug Environment..." />
@@ -434,6 +437,7 @@
   
   <!-- Check if Jar should be created -->
   <target name="checkJarPhase">
+    <delete dir="${basedir}/target" />
     <condition property="doJar">
       <equals arg1="${jarPhase}" arg2="package" />
     </condition>
@@ -441,7 +445,6 @@
 
   <!-- Jar the project -->
   <target name="jar" depends="checkJarPhase" if="doJar">
-    <delete dir="${basedir}/target" />
     <jar destfile="${basedir}/target/${project.artifactId}-${project.version}.jar" basedir="${basedir}" includes="**" excludes="target/**" />
   </target>
 

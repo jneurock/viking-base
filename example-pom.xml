@@ -12,6 +12,8 @@
   <!-- Add name -->
   <name>Project Name Here</name>
 
+  <packaging>pom</packaging>
+
   <properties>
     <ant_clean>clean</ant_clean>
     <ant_target>text</ant_target>
@@ -52,12 +54,6 @@
   </profiles>
 
   <build>
-    <resources>
-      <resource>
-        <directory>${basedir}</directory>
-      </resource>
-    </resources>
-
     <plugins>
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
@@ -74,23 +70,12 @@
                 <echo message="Starting Ant build..." />
                 
                 <ant antfile="${basedir}/bower_components/viking-base/build-custom/build.xml">
+                  <property name="jarPhase" value="${jarPhase}" />
                   <target name="${ant_clean}" />
                   <target name="${ant_target}" />
                 </ant>
               </target>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-        <executions>
-          <execution>
-            <id>default-jar</id>
-            <phase>${jarPhase}</phase>
           </execution>
         </executions>
       </plugin>
