@@ -12,7 +12,6 @@ The latest versions of the following are recommended.
 * Java 1.6+
 * Maven or Ant
 * Node.js
-* npm
 * Bower
 
 # Setting up a New Project
@@ -73,5 +72,7 @@ If I use Node and/or Compass and/or Grunt, etc., why would I use this? This plat
 * [Ember Starter Kit](https://github.com/emberjs/starter-kit)
 * [Handlebars.js](http://handlebarsjs.com/)
 * [Foundation](http://foundation.zurb.com/)
+* [Node.js](http://nodejs.org/)
+* [Bower](http://bower.io/)
 * [Maven](http://maven.apache.org/)
 * [Ant](http://ant.apache.org/)
