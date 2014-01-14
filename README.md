@@ -56,6 +56,12 @@ Some target:
 ## When the Build Is Done
 It is important to note that the build command should be executed from the project root. If the build has completed successfuly, you should have a publish directory containing your project output.
 
+## Skipping the Jar Target
+By default, the build will Jar the contents of your project. If you don't want this behavior you can set the "jarPhase" property to "never" from the command line:
+`mvn clean package -DjarPhase=never`
+or
+`ant -f bower_components/viking-base/build-custom -DjarPhase=never`
+
 ## Customizing the build
 It's possible to customize your build by adding your own build.xml file. In your build file you would include the base build file found at bower_components/viking-base/build-custom/build.xml. You can add new targets, override existing targets, add new properties or override existing properties. You can then tell Ant to use your build file or modify the POM so Maven will use it.
 
