@@ -52,6 +52,7 @@ var
     // An array of directories to make
     makeDirs = [
       'css',
+      'img',
       'js',
       'js/app',
       'js/templates'
