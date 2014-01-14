@@ -1,6 +1,6 @@
 {
-  "name": "viking_base",
-  "version": "0.0.5",
+  "name": "viking-base",
+  "version": "0.0.6",
   "ignore": [
     ".gitignore",
     "bower.json",

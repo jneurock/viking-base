@@ -28,7 +28,7 @@ cd my-project
 bower install viking-base
 
 # Run the install script
-node bower_components/viking_base/example-install
+node bower_components/viking-base/example-install
 ```
 
 After running the install script you will be ready to build. Out-of-the box your project will build a Hello Vikings demo application.
@@ -52,13 +52,13 @@ Some target:
 `mvn clean package -P <target-name>`
 
 ## Building with Ant
-`ant -f bower_components/viking_base/build-custom <optional-target-name>`
+`ant -f bower_components/viking-base/build-custom <optional-target-name>`
 
-### When the Build Is Done
+## When the Build Is Done
 It is important to note that the build command should be executed from the project root. If the build has completed successfuly, you should have a publish directory containing your project output.
 
 ## Customizing the build
-It's possible to customize your build by adding your own build.xml file. In your build file you would include the base build file found at bower_components/viking_base/build-custom/build.xml. You can add new targets, override existing targets, add new properties or override existing properties. You can then tell Ant to use your build file or modify the POM so Maven will use it.
+It's possible to customize your build by adding your own build.xml file. In your build file you would include the base build file found at bower_components/viking-base/build-custom/build.xml. You can add new targets, override existing targets, add new properties or override existing properties. You can then tell Ant to use your build file or modify the POM so Maven will use it.
 
 ## Versioning Your Project
 Aside from using Git tags to keep track of your project version, you can also keep track of the version in the POM. Even if you build your project with Ant, the build will look to the POM for the version number.

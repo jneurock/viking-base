@@ -72,7 +72,7 @@
               <target>
                 <echo message="Starting Ant build..." />
                 
-                <ant antfile="${basedir}/bower_components/viking_base/build-custom/build.xml">
+                <ant antfile="${basedir}/bower_components/viking-base/build-custom/build.xml">
                   <target name="${ant_clean}" />
                   <target name="${ant_target}" />
                 </ant>
