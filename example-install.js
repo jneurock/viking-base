@@ -101,8 +101,8 @@ console.info('Creating base project directories...');
 // Create some needed folders
 for (i = 0; i < makeDirs.length; i++) {
 
-  if (!fs.existsSync(target)) {
- 
+  if (!fs.existsSync(makeDirs[i])) {
+
     fs.mkdir(makeDirs[i]);
 
     console.info('  ' + makeDirs[i]);
