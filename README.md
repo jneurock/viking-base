@@ -19,6 +19,24 @@ Currently, the package consists of:
 
 The next version of the package aims to consist of the latest versions of each dependency, e.g., Foundation 5 and Ember 1.3.
 
+# Quick Start Guide
+
+```
+# Create a directory for your project
+mkdir <my-project> && cd <my-project>
+
+# Install the package with Bower
+bower install viking-base
+
+# Run the install script
+node bower_components/viking-base/example-install
+
+# Build the Hello Vikings app with Maven or Ant
+mvn clean package
+or
+ant -f bower_components/viking-base/build-custom
+```
+
 # System Requirements
 The project is known to work with the following:
 
@@ -31,10 +49,10 @@ The project is known to work with the following:
 
 ```
 # Create a directory for your project
-mkdir my-project
+mkdir <my-project>
 
 # Change into your project directory
-cd my-project
+cd <my-project>
 
 # Install the package with Bower
 bower install viking-base

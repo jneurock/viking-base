@@ -1,7 +1,7 @@
 var
     // An array of objects representing files to copy
     copyFiles = [{
-      from: 'bower_components/viking-base/example.gitignore',
+      from: 'bower_components/viking-base/example-.gitignore',
       to: '.gitignore'
     }, {
       from: 'bower_components/viking-base/example-index.html',
