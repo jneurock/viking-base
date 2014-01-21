@@ -70,7 +70,7 @@ You can build your project with Maven or Ant. The build command should be execut
 * debug - Does not concatinate or minify JavaScript files for debugging
 * debugdocs - Same as above but also generates JSDoc documentation
 * docs - Generates JSDoc documentation only
-* handlebars - If you just need to publish updates to your Handlebars templates
+* handlebars - If you just need to publish updates to your Handlebars templates (for debug builds only)
 
 When the build is finished, you should have a publish directory containing your project output.
 

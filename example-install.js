@@ -38,7 +38,13 @@ var
       to: 'img/favicon.ico'
     }, {
       from: 'bower_components/viking-base/js/example-main.js',
-      to: 'js/main.js'
+      to: 'js/main.js',
+    }, {
+      from: 'bower_components/viking-base/js/example-plugins.js',
+      to: 'js/plugins.js'
+    }, {
+      from: 'bower_components/viking-base/js/example-pre-app.js',
+      to: 'js/pre-app.js'
     }, {
       from: 'bower_components/viking-base/js/example-templates/example-application.hbs',
       to: 'js/templates/application.hbs'
