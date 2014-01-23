@@ -31,10 +31,10 @@ bower install viking-base
 # Run the install script
 node bower_components/viking-base/example-install
 
-# Build the Hello Vikings app with Maven or Ant
-mvn clean package
+# Build the debug version of the Hello Vikings app with Maven or Ant
+mvn clean package -P debug
 or
-ant -f bower_components/viking-base/build-custom
+ant -f bower_components/viking-base/build-custom debug
 ```
 
 # System Requirements
@@ -73,7 +73,7 @@ You can build your project with Maven or Ant. The build command should be execut
 * debughbs - If you just need to publish updates to your Handlebars templates.
 * docs - Generates JSDoc documentation only.
 
-When the build is finished, you should have a publish directory containing your project output.
+When the build is finished, you should have a publish directory containing your project output (unless only building documentation). Documentation will be output to the "docs" directory in the project root.
 
 ## Building with Maven
 If you are using Maven to build your project you need to add build targets by using the "-P" flag. A build target is optional.
@@ -113,3 +113,4 @@ If I use Node and/or Compass and/or Grunt, etc., why would I use this? This plat
 * [Bower](http://bower.io/)
 * [Maven](http://maven.apache.org/)
 * [Ant](http://ant.apache.org/)
+* [JSDoc](http://usejsdoc.org/)
