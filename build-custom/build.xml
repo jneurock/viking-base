@@ -22,6 +22,12 @@
     <antcall target="-build.debug" />
   </target>
 
+  <!-- CSS target -->
+  <target name="debugcss">
+    <echo message="Building CSS only..." />
+    <antcall target="-build.debugcss" />
+  </target>
+
   <!-- Debug with documentation target -->
   <target name="debugdocs">
     <echo message="Building a Debug Environment with documentation..." />
@@ -35,9 +41,9 @@
   </target>
 
   <!-- Handlebars target -->
-  <target name="handlebars">
+  <target name="debughbs">
     <echo message="Compiling Handlebars templates only..." />
-    <antcall target="-build.handlebars" />
+    <antcall target="-build.debughbs" />
   </target>
 
   <!--
@@ -57,10 +63,11 @@
   -->
   
   <target name="-text.production" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -js.all.minify, -js.main.concat, -js.scripts.concat, -css, -usemin, -htmlclean, -copy"/>
-  <target name="-build.debug" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -css, -usemin, -htmlclean, -copyall" />
-  <target name="-build.debugdocs" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -css, -usemin, -htmlclean, -copyall, -jsdoc3" />
+  <target name="-build.debugcss" depends="version, -css" />
+  <target name="-build.debug" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -css, -htmlclean, -copyall" />
+  <target name="-build.debugdocs" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -css, -htmlclean, -copyall, -jsdoc3" />
+  <target name="-build.debughbs" depends="version, -js.ember.handlebars.copy" />
   <target name="-build.docs" depends="version, -jsdoc3" />
-  <target name="-build.handlebars" depends="version, -js.ember.handlebars.copy" />
 
   <!--
   *************************************************
@@ -200,6 +207,9 @@
           <equals arg1="${ant.project.invoked-targets}" arg2="-build.debug" />
         </not>
         <not>
+          <equals arg1="${ant.project.invoked-targets}" arg2="-build.debugcss" />
+        </not>
+        <not>
           <equals arg1="${ant.project.invoked-targets}" arg2="-build.debugdocs" />
         </not>
       </and>
@@ -255,36 +265,36 @@
         <replaceregexp match="&lt;script.*src=['&quot;]?${dir.js.modules}/(.*)['&quot;]\s*&gt;" replace="&lt;script src='${modules.js.dir}/\1'&gt;" flags="mg">
           <fileset dir="${dir.intermediate}" includes="${page-files}" />
         </replaceregexp>
-      </then>
-    </if>
 
-    <!-- Save the concatenated and minified version of style.css, since we were working with it
-         earlier when revving image filenames [target: -rev.image.filenames] -->
-    <checksum file="${dir.intermediate}/${dir.css}/style-concat.min.css" algorithm="sha" property="css.fullsha" />
-    <propertyregex property="css.sha" input="${css.fullsha}" regexp=".{${hash.length}}" select="\0" />
-    <property name="style.css" value="${dir.css}/${css.sha}.css" />
-    <copy file="${dir.intermediate}/${dir.css}/style-concat.min.css" tofile="${dir.publish}/${dir.css.default}/${css.sha}.css" />
+        <!-- Save the concatenated and minified version of style.css, since we were working with it
+             earlier when revving image filenames [target: -rev.image.filenames] -->
+        <checksum file="${dir.intermediate}/${dir.css}/style-concat.min.css" algorithm="sha" property="css.fullsha" />
+        <propertyregex property="css.sha" input="${css.fullsha}" regexp=".{${hash.length}}" select="\0" />
+        <property name="style.css" value="${dir.css}/${css.sha}.css" />
+        <copy file="${dir.intermediate}/${dir.css}/style-concat.min.css" tofile="${dir.publish}/${dir.css.default}/${css.sha}.css" />
 
-    <echo message="Updating the HTML with the new css filename: ${style.css}" />
-    <replaceregexp match="&lt;link(.+)href=['&quot;]?(.*)${dir.css}/${file.root.stylesheet}(?:\?.*)?['&quot;\s]?(.*/?&gt;)" replace="&lt;link\1href='\2${dir.css.default}/${css.sha}.css'\3" flags="m">
-      <fileset dir="${dir.intermediate}" includes="${page-files}" />
-    </replaceregexp>
-    
-    <!-- Tidy up HTML when compiling LESS -->
-    <if>
-      <equals arg1="${build.css.less}" arg2="true" />
-      <then>
-        <echo message="Removing LESS CSS Script from HTML..." />
-        <replaceregexp match="&lt;!-- less script [\d\w\s\W]* end less script --&gt;" replace="">
+        <echo message="Updating the HTML with the new css filename: ${style.css}" />
+        <replaceregexp match="&lt;link(.+)href=['&quot;]?(.*)${dir.css}/${file.root.stylesheet}(?:\?.*)?['&quot;\s]?(.*/?&gt;)" replace="&lt;link\1href='\2${dir.css.default}/${css.sha}.css'\3" flags="m">
           <fileset dir="${dir.intermediate}" includes="${page-files}" />
         </replaceregexp>
-        <echo message="Changing rel attribute to 'stylesheet' from 'stylesheet/less'" />
-        <replaceregexp match="rel=['&quot;]stylesheet/less['&quot;]" replace="rel='stylesheet'">
-          <fileset dir="${dir.intermediate}" includes="${page-files}" />
-        </replaceregexp>
+        
+        <!-- Tidy up HTML when compiling LESS -->
+        <if>
+          <equals arg1="${build.css.less}" arg2="true" />
+          <then>
+            <echo message="Removing LESS CSS Script from HTML..." />
+            <replaceregexp match="&lt;!-- less script [\d\w\s\W]* end less script --&gt;" replace="">
+              <fileset dir="${dir.intermediate}" includes="${page-files}" />
+            </replaceregexp>
+            <echo message="Changing rel attribute to 'stylesheet' from 'stylesheet/less'" />
+            <replaceregexp match="rel=['&quot;]stylesheet/less['&quot;]" replace="rel='stylesheet'">
+              <fileset dir="${dir.intermediate}" includes="${page-files}" />
+            </replaceregexp>
+          </then>
+        </if>
+        <foreach list="${file.stylesheets}" param="css_file" target="-css-remove-concatenated-stylesheets" />
       </then>
     </if>
-    <foreach list="${file.stylesheets}" param="css_file" target="-css-remove-concatenated-stylesheets" />
   </target>
 
   <target name="-css" depends="-mkdirs" description="Concatenates and Minifies any stylesheets @imported via the file.stylesheets">
@@ -367,27 +377,48 @@
         <echo message="NOT Processing SASS (SCSS) CSS" />
       </else>
     </if>
-    <echo message="Minifying CSS..."/>
-    <apply executable="java" parallel="false">
-      <fileset dir="${dir.intermediate}/${dir.css}/" includes="style-concat.css" />
-      <arg line="-jar" />
-      <arg path="${dir.build.tools}/${tool.yuicompressor}" />
-      <srcfile />
-      <arg line="-o" />
-      <mapper type="merge" to="${basedir}/${dir.intermediate}/${dir.css}/style-concat.min.css" />
-      <targetfile />
-    </apply>
+    <if>
+      <and>
+        <not>
+          <equals arg1="${ant.project.invoked-targets}" arg2="-build.debug" />
+        </not>
+        <not>
+          <equals arg1="${ant.project.invoked-targets}" arg2="-build.debugcss" />
+        </not>
+        <not>
+          <equals arg1="${ant.project.invoked-targets}" arg2="-build.debugdocs" />
+        </not>
+      </and>
+      <then>
+        <echo message="Minifying CSS..."/>
+        <apply executable="java" parallel="false">
+          <fileset dir="${dir.intermediate}/${dir.css}/" includes="style-concat.css" />
+          <arg line="-jar" />
+          <arg path="${dir.build.tools}/${tool.yuicompressor}" />
+          <srcfile />
+          <arg line="-o" />
+          <mapper type="merge" to="${basedir}/${dir.intermediate}/${dir.css}/style-concat.min.css" />
+          <targetfile />
+        </apply>
 
-    <echo message="Minifying any unconcatenated CSS files..." />
-    <apply executable="java" parallel="false">
-      <fileset dir="${dir.source}/${dir.css}/" excludes="${concat-files}" includes="**/*.css" />
-      <arg line="-jar" />
-      <arg path="${dir.build.tools}/${tool.yuicompressor}" />
-      <srcfile />
-      <arg line="-o" />
-      <mapper type="glob" from="*.css" to="${basedir}/*.css" />
-      <targetfile />
-    </apply>
+        <echo message="Minifying any unconcatenated CSS files..." />
+        <apply executable="java" parallel="false">
+          <fileset dir="${dir.source}/${dir.css}/" excludes="${concat-files}" includes="**/*.css" />
+          <arg line="-jar" />
+          <arg path="${dir.build.tools}/${tool.yuicompressor}" />
+          <srcfile />
+          <arg line="-o" />
+          <mapper type="glob" from="*.css" to="${basedir}/*.css" />
+          <targetfile />
+        </apply>
+      </then>
+      <else>
+        <copy file="${basedir}/${dir.intermediate}/${dir.css}/style-concat.css" tofile="${basedir}/${dir.publish}/${dir.css}/${file.root.stylesheet}" />
+        <copy todir="${basedir}/${dir.publish}/${dir.css}">
+          <fileset dir="${dir.source}/${dir.css}/" excludes="${concat-files}" includes="**/*.css" />
+        </copy>
+      </else>
+    </if>
 
     <!--
       Since the mapper for minifying unconcatenated CSS files was changed,
@@ -481,7 +512,7 @@
   <!-- Publish precompiled Handlebars templates -->
   <target name="-js.ember.handlebars.copy" depends="-js.ember.handlebars">
     <if>
-      <equals arg1="${ant.project.invoked-targets}" arg2="-build.handlebars" />
+      <equals arg1="${ant.project.invoked-targets}" arg2="-build.debughbs" />
       <then>
         <echo message="Copying compiled Handlebars templates to publish folder..." />
         <copy todir="${dir.publish}/${dir.js}/${dir.templates}" file="${dir.source}/${dir.js}/${dir.templates}/${handlebars.outfile}" />

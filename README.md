@@ -41,7 +41,7 @@ ant -f bower_components/viking-base/build-custom
 The project is known to work with the following:
 
 * Java 1.6+
-* Maven 3.0.x+ or Ant 1.9.x+
+* Maven 3.0+ or Ant 1.8.2+
 * Node.js 0.10.7+
 * Bower 1.2.8+
 
@@ -67,10 +67,11 @@ After running the install script you will be ready to build. Out-of-the box your
 You can build your project with Maven or Ant. The build command should be executed from the project root. There are a number of build targets to choose from:
 
 * No target - Will start a production build
-* debug - Does not concatinate or minify JavaScript files for debugging
-* debugdocs - Same as above but also generates JSDoc documentation
-* docs - Generates JSDoc documentation only
-* handlebars - If you just need to publish updates to your Handlebars templates (for debug builds only)
+* debug - Does not concatinate or minify JavaScript files. Concatenates but does not minify CSS files.
+* debugcss - Concatenates but does not minify CSS files.
+* debugdocs - Same as "debug" target but also generates JSDoc documentation.
+* debughbs - If you just need to publish updates to your Handlebars templates.
+* docs - Generates JSDoc documentation only.
 
 When the build is finished, you should have a publish directory containing your project output.
 

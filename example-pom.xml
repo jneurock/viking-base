@@ -30,6 +30,14 @@
     </profile>
 
     <profile>
+      <id>debugcss</id>
+      <properties>
+        <ant_clean>noclean</ant_clean>
+        <ant_target>debugcss</ant_target>
+      </properties>
+    </profile>
+
+    <profile>
       <id>debugdocs</id>
       <properties>
         <ant_target>debugdocs</ant_target>
@@ -45,10 +53,10 @@
     </profile>
 
     <profile>
-      <id>handlebars</id>
+      <id>debughbs</id>
       <properties>
         <ant_clean>noclean</ant_clean>
-        <ant_target>handlebars</ant_target>
+        <ant_target>debughbs</ant_target>
       </properties>
     </profile>
   </profiles>
