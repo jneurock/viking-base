@@ -63,9 +63,9 @@
   -->
   
   <target name="-text.production" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -js.all.minify, -js.main.concat, -js.scripts.concat, -css, -usemin, -htmlclean, -copy"/>
-  <target name="-build.debugcss" depends="version, -css" />
-  <target name="-build.debug" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -css, -htmlclean, -copyall" />
-  <target name="-build.debugdocs" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -css, -htmlclean, -copyall, -jsdoc3" />
+  <target name="-build.debugcss" depends="version, -needhtmlrefresh, -css" />
+  <target name="-build.debug" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -needhtmlrefresh, -css, -htmlclean, -copyall" />
+  <target name="-build.debugdocs" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -needhtmlrefresh, -css, -htmlclean, -copyall, -jsdoc3" />
   <target name="-build.debughbs" depends="version, -js.ember.handlebars.copy" />
   <target name="-build.docs" depends="version, -jsdoc3" />
 
@@ -262,7 +262,7 @@
         <!--[! use comments like this one to avoid having them get minified -->
         
         <echo message="Update the HTML to reference our name-mangled modules directory" />
-        <replaceregexp match="&lt;script.*src=['&quot;]?${dir.js.modules}/(.*)['&quot;]\s*&gt;" replace="&lt;script src='${modules.js.dir}/\1'&gt;" flags="mg">
+        <replaceregexp match="&lt;script.*src=['&quot;]?${dir.js.modules}/(.*)['&quot;]\s*&gt;" replace="&lt;script src=&quot;${modules.js.dir}/\1&quot;&gt;" flags="mg">
           <fileset dir="${dir.intermediate}" includes="${page-files}" />
         </replaceregexp>
 
@@ -274,7 +274,7 @@
         <copy file="${dir.intermediate}/${dir.css}/style-concat.min.css" tofile="${dir.publish}/${dir.css.default}/${css.sha}.css" />
 
         <echo message="Updating the HTML with the new css filename: ${style.css}" />
-        <replaceregexp match="&lt;link(.+)href=['&quot;]?(.*)${dir.css}/${file.root.stylesheet}(?:\?.*)?['&quot;\s]?(.*/?&gt;)" replace="&lt;link\1href='\2${dir.css.default}/${css.sha}.css'\3" flags="m">
+        <replaceregexp match="&lt;link(.+)href=['&quot;]?(.*)${dir.css}/${file.root.stylesheet}(?:\?.*)?['&quot;\s]?(.*/?&gt;)" replace="&lt;link\1href=&quot;\2${dir.css.default}/${css.sha}.css&quot;\3" flags="m">
           <fileset dir="${dir.intermediate}" includes="${page-files}" />
         </replaceregexp>
         
@@ -413,10 +413,22 @@
         </apply>
       </then>
       <else>
-        <copy file="${basedir}/${dir.intermediate}/${dir.css}/style-concat.css" tofile="${basedir}/${dir.publish}/${dir.css}/${file.root.stylesheet}" />
-        <copy todir="${basedir}/${dir.publish}/${dir.css}">
-          <fileset dir="${dir.source}/${dir.css}/" excludes="${concat-files}" includes="**/*.css" />
-        </copy>
+        <var name="matchRegex" value="" />
+        <var name="replaceRegex" value="" />
+
+        <replaceregexp match="${matchRegex}" replace="${replaceRegex}" flags="m">
+          <fileset dir="${dir.intermediate}" includes="${page-files}" />
+        </replaceregexp>
+
+        <checksum file="${dir.intermediate}/${dir.css}/style-concat.css" algorithm="sha" property="css.fullsha" />
+        <propertyregex property="css.sha" input="${css.fullsha}" regexp=".{${hash.length}}" select="\0" />
+        <property name="style.css" value="${dir.css}/${css.sha}.css" />
+        <copy file="${dir.intermediate}/${dir.css}/style-concat.css" tofile="${dir.publish}/${dir.css.default}/${css.sha}.css" />
+
+        <echo message="Updating the HTML with the new css filename: ${style.css}" />
+        <replaceregexp match="&lt;link(.+)href=['&quot;]?(.*)${dir.css}/${file.root.stylesheet}(?:\?.*)?['&quot;\s]?(.*/?&gt;)" replace="&lt;link\1href=&quot;\2${dir.css.default}/${css.sha}.css&quot;\3" flags="m">
+          <fileset dir="${dir.intermediate}" includes="${page-files}" />
+        </replaceregexp>
       </else>
     </if>
 
