@@ -118,30 +118,6 @@
     </if>
   </target>
 
-  <target name="-copy" depends="-mkdirs">
-    <!-- This is a private target -->
-    
-    <echo message="Copying over new files..." />
-    <copy todir="./${dir.publish}" includeEmptyDirs="false">
-      <fileset dir="${dir.source}/" excludes="${file.default.exclude}, ${file.exclude}">
-        <!-- exclude files that are superseded by optimized versions with different names -->
-        <!-- this is not strictly necessary, but it avoids putting unreferenced files into your server -->
-        <exclude name="${dir.js}/**/*.js" />
-        <exclude name="${dir.js.modules}" />
-        <exclude name="${dir.css}/**/*.css" />
-      </fileset>
-    </copy>
-    <echo message="A copy of all new non-dev files are now in: ./${dir.publish}." />
-  </target>
-
-  <target name="-copyall" depends="-mkdirs">
-    <echo message="Copying over all files..." />
-    <copy todir="./${dir.publish}">
-      <fileset dir="${dir.source}/" excludes="${file.default.exclude}, ${file.exclude}" />
-    </copy>
-    <echo message="A copy of all non-dev files are now in: ./${dir.publish}." />
-  </target>
-
   <target name="-js.all.minify" depends="-mkdirs, -js.ember.handlebars" description="(PRIVATE) Minifies the scripts.js files created by js.scripts.concat">
     <if>
       <and>
@@ -179,6 +155,20 @@
           <mapper type="glob" from="*.js" to="${basedir}/${dir.intermediate}/*.js" />
           <targetfile />
         </apply>
+
+        <!-- at this point all js files are minified with their original names -->
+      
+        <copy todir="${dir.publish}">
+          <fileset dir="${dir.intermediate}" includes="${file.js.bypass}, ${slug.libs}/*, ${slug.modules}/*, **/*.js">
+            <exclude name="scripts-concat.js" />
+            <exclude name="scripts-concat.min.js" />
+            <exclude name="otherscripts-concat.js" />
+            <exclude name="main.js" />
+            <exclude name="plugins.js" />
+            <exclude name="pre-app.js" />
+            <exclude name="${file.root.script}" />
+          </fileset>
+        </copy>
       </then>
       <else>
         <echo message="Copying scripts" />
@@ -187,17 +177,6 @@
         </copy>
       </else>
     </if>
-      
-    <!-- at this point all js files are minified with their original names -->        
-    <copy todir="${dir.publish}/${dir.js}">
-      <fileset dir="${dir.intermediate}/${dir.js}" includes="${file.js.bypass}, ${slug.libs}/*, ${slug.modules}/*">
-        <exclude name="scripts-concat.js" />
-        <exclude name="scripts-concat.min.js" />
-        <exclude name="otherscripts-concat.js" />
-        <exclude name="plugins.js" />
-        <exclude name="${file.root.script}" />
-      </fileset>
-    </copy>
   </target>
 
   <target name="-usemin" depends="-rev.image.filenames" description="(PRIVATE) Replaces references to non-minified scripts">

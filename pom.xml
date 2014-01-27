@@ -4,7 +4,7 @@
 
   <groupId>com.vikingglory.viking-base</groupId>
   <artifactId>viking-base</artifactId>
-  <version>0.0.17</version>
+  <version>0.0.18</version>
   <name>Viking Base</name>
 
   <properties>
