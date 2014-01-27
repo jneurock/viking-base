@@ -4,11 +4,17 @@ var
       from: 'bower_components/viking-base/example-.gitignore',
       to: '.gitignore'
     }, {
+      from: 'bower_components/viking-base/example-404.html',
+      to: '404.html'
+    }, {
       from: 'bower_components/viking-base/example-index.html',
       to: 'index.html'
     }, {
       from: 'bower_components/viking-base/example-pom.xml',
       to: 'pom.xml'
+    }, {
+      from: 'bower_components/viking-base/example-humans.txt',
+      to: 'humans.txt'
     }, {
       from: 'bower_components/viking-base/example-robots.txt',
       to: 'robots.txt'
@@ -16,26 +22,11 @@ var
       from: 'bower_components/viking-base/css/example-style.scss',
       to: 'css/style.scss'
     }, {
-      from: 'bower_components/viking-base/img/example-apple-touch-icon-57x57-precomposed.png',
-      to: 'img/apple-touch-icon-57x57-precomposed.png'
-    }, {
-      from: 'bower_components/viking-base/img/example-apple-touch-icon-72x72-precomposed.png',
-      to: 'img/apple-touch-icon-72x72-precomposed.png'
-    }, {
-      from: 'bower_components/viking-base/img/example-apple-touch-icon-114x114-precomposed.png',
-      to: 'img/apple-touch-icon-114x114-precomposed.png'
-    }, {
-      from: 'bower_components/viking-base/img/example-apple-touch-icon-144x144-precomposed.png',
-      to: 'img/apple-touch-icon-144x144-precomposed.png'
-    }, {
       from: 'bower_components/viking-base/img/example-apple-touch-icon-precomposed.png',
-      to: 'img/apple-touch-icon-precomposed.png'
-    }, {
-      from: 'bower_components/viking-base/img/example-apple-touch-icon.png',
-      to: 'img/apple-touch-icon.png'
+      to: 'apple-touch-icon-precomposed.png'
     }, {
       from: 'bower_components/viking-base/img/example-favicon.ico',
-      to: 'img/favicon.ico'
+      to: 'favicon.ico'
     }, {
       from: 'bower_components/viking-base/js/example-main.js',
       to: 'js/main.js',
@@ -58,7 +49,6 @@ var
     // An array of directories to make
     makeDirs = [
       'css',
-      'img',
       'js',
       'js/app',
       'js/templates'

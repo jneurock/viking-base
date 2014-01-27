@@ -12,7 +12,7 @@
     "foundation": "4.3.2",
     "handlebars.js": "1.0.0",
     "jquery": "1.10.2",
-    "modernizr": "2.6.2",
+    "modernizr": "2.7.1",
     "respond": "1.4.1"
   }
 }

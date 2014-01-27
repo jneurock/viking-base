@@ -7,36 +7,25 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-
     <title></title>
-
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="css/style.scss">
+    <!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
 
+    <link rel="stylesheet" href="css/style.scss">
     <script src="bower_components/modernizr/modernizr.js"></script>
 
     <!--[if lt IE 9]>
-        <script src="bower_components/respond/dest/respond.src.js"></script>
+      <script src="bower_components/respond/dest/respond.src.js"></script>
     <![endif]-->
-
-    <link rel="icon" href="img/favicon.ico">
-    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="57x57" href="img/apple-touch-icon-57x57-precomposed.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
-    <link rel="apple-touch-icon" href="img/apple-touch-icon-precomposed.png">
   </head>
 
   <body>
-    <!--[if lt IE 7]>
-      <p class="chromeframe">
+    <!--[if lt IE 8]>
+      <p class="browsehappy">
         You are using an <strong>outdated</strong> browser.
-        Please <a href="http://browsehappy.com/">upgrade your browser</a> or
-        <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a>
-        to improve your experience.
+        Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
       </p>
     <![endif]-->
 
@@ -51,5 +40,15 @@
     <script src="js/app/app.js"></script>
     <script src="js/main.js"></script>
     <!-- //-end- concat_js -->
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X');ga('send','pageview');
+    </script>
   </body>
 </html>
