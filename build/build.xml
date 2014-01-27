@@ -954,56 +954,64 @@
         <echo message=" "/>
         <echo message="First, we run optipng on the .png files..."/>
 
-        <!-- By default set strip-meta-tags to empty -->
-        <var name="strip-meta-tags" value=""/>
-
         <if>
             <equals arg1="${images.strip.metadata}" arg2="true"/>
             <then>
-                <var name="strip-meta-tags" value="-strip all"/>
+              <var name="strip-meta-tags" value="-strip all"/>
             </then>
+            <else>
+              <var name="strip-meta-tags" value="-strip all"/>
+            </else>
         </if>
 
-        <!-- By default set os.family to windows, and optipng as available and it's executable -->
-        <var name="os.family" value="windows"/>
-        <var name="optipng.available" value="true"/>
-        <var name="optipng.executable" value="${basedir}/${dir.build.tools}/${tool.optipng}"/>
-
-        <!-- osfamily=unix is actually true on OS X as well -->
-        <!-- On *nix's and OS X, check for optipng and give a helpful message if it's not installed -->
-        <if>
-            <os family="unix"/>
+       
+         <if>
+            <os family="windows"/>
+              <then>
+                <var name="optipng.available" value="true"/>
+                <var name="optipng.executable" value="${basedir}/${dir.build.tools}/${tool.optipng}"/>
+              </then>
+         </if>
+         <if>
+          <os family="unix"/>      
             <then>
-                <if>
-                    <!-- Then check for availability if unix -->
-                    <available file="optipng" filepath="${ENV.PATH}"/>
-                    <then>
-                        <var name="optipng.executable" value="optipng"/>
-                        <shellscript shell="bash" outputproperty="optipng.version">
-                          optipng -version | grep -Po 'OptiPNG\s(version\s)?\d\.\d' | grep -Po '\d\.\d'
-                        </shellscript>
-                        <echo message="You have optipng installed and your version is: ${optipng.version}"/>     
-                    </then>
-                    <else>
-                        <var name="optipng.available" value="false"/>
-                    </else>
-                </if>
-                <if> 
-                  <equals arg1="${optipng.version}" arg2="0.7"/>
-                  <then>
-                        <var name="optipng.executable" value="optipng"/>
-                    </then>
-                    <else>
-                        <var name="optipng.available" value="false"/>
-                    </else>
-                 </if>
-
-                <!-- Temporarily fixes #39 -->
-                <var name="strip-meta-tags" value=""/>
+              <var name="optipng.executable" value="optipng"/>
             </then>
-        </if>
-
-        <!-- Now check for availability -->
+          </if>    
+          <if>
+            <not>
+              <available file="optipng" filepath="${ENV.PATH}"/>
+            </not>     
+            <then>
+              <var name="optipng.inpath" value="false"/>
+            </then>
+            <else>
+              <var name="optipng.inpath" value="true"/>
+            </else>
+          </if>
+          <if>
+            <and>
+              <equals arg1="${images.optipng.newer}" arg2="true"/>
+              <os family="unix"/>
+              <equals arg1="${optipng.inpath}" arg2="true"/>
+            </and>  
+              <then>
+                <var name="optipng.available" value="true"/>
+              </then>
+              <else>
+                <var name="optipng.available.older" value="true"/>
+              </else>
+            </if>
+        <if>
+          <equals arg1="${optipng.available}" arg2="false"/>
+          <then>
+            <!-- Print out message if optipng is not available -->
+            <echo message="*** optipng NOT INSTALLED. SKIPPING OPTIMIZATION OF PNGs." />
+            <echo message="*** Install optipng to enable png optimization." />
+            <echo message="*** For instructions see 'Dependencies' at: https://github.com/h5bp/ant-build-script/wiki/Platform" />
+          </then>
+        </if>  
+                  
         <if>
             <equals arg1="${optipng.available}" arg2="true"/>
             <then>
@@ -1018,7 +1026,6 @@
                       </delete>
                     </then>
                 </if>
-
                 <!-- Run if available -->
                 <for param="image-dir">
                     <path>
@@ -1038,7 +1045,7 @@
                             </then>
                         </if>
 
-                        <apply executable="${optipng.executable}" dest="./${dir.publish}/${relative.image.dir}/" osfamily="${os.family}">
+                        <apply executable="${optipng.executable}" dest="./${dir.publish}/${relative.image.dir}/">
                             <fileset dir="./${dir.source}/${relative.image.dir}/" includes="**/*.png"  excludes="${images.bypass}, ${images.default.bypass}"/>
                             <arg value="-quiet"/>
                             <arg value="-o7"/>
@@ -1053,40 +1060,86 @@
                 </for>
             </then>
             <else>
-                <!-- Print out message if optipng is not available -->
-                <echo message="*** optipng NOT INSTALLED. SKIPPING OPTIMIZATION OF PNGs." />
-                <echo message="*** Install optipng to enable png optimization." />
-                <echo message="*** For instructions see 'Dependencies' at: https://github.com/h5bp/ant-build-script/wiki/Platform" />
+                <if>
+                <and>
+                  <equals arg1="optipng.available.older" arg2="true"/>
+                  <equals arg1="${optipng.inpath}" arg2="true"/>
+                </and>
+                <then>
+                <!-- work around https://sourceforge.net/tracker/?func=detail&aid=2671422&group_id=151404&atid=780916 -->
+                <if>
+                  <available file="./${dir.publish}/${dir.images}/" type="dir" />
+                    <then>
+                      <delete>
+                          <fileset dir="./${dir.publish}/${dir.images}/">
+                              <include name="**/*.png"/>
+                          </fileset>
+                      </delete>
+                    </then>
+                </if>
+                <!-- Run if available -->
+                <for param="image-dir">
+                    <path>
+                        <dirset dir="${dir.source}" includes="${dir.images}"/>
+                    </path>
+                    <sequential>
+                        <property name="relative.image.dir" location="@{image-dir}" relative="yes"/>
+
+                        <if>
+                            <not>
+                                <available file="${basedir}/${dir.publish}/${relative.image.dir}"/>
+                            </not>
+                            <then>
+                                <copy todir="${dir.publish}/${relative.image.dir}">
+                                    <dirset dir="${dir.source}/${relative.image.dir}"/>
+                                </copy>
+                            </then>
+                        </if>
+
+                        <apply executable="${optipng.executable}" dest="./${dir.publish}/${relative.image.dir}/">
+                            <fileset dir="./${dir.source}/${relative.image.dir}/" includes="**/*.png"  excludes="${images.bypass}, ${images.default.bypass}"/>
+                            <arg value="-quiet"/>
+                            <arg value="-o7"/>
+                            <arg value="-out"/>
+                            <targetfile/>
+                            <srcfile/>
+                            <mapper type="identity"/>
+                        </apply>
+                        <var name="relative.image.dir" unset="true"/>
+                    </sequential>
+                  </for>
+               </then>
+              </if>
             </else>
+
         </if>
         <!-- Let's do ADVPNG -->
         <!-- On *nix's and OS X, check for advpng and give a helpful message if it's not installed -->
         
         <echo message="Now, we run advpng on the .png files..."/>
-        <!-- By default set os.family to windows, and optipng as available and it's executable -->
-        <var name="os.family" value="windows"/>
-        <var name="advpng.available" value="true"/>
-        <var name="advpng.executable" value="${basedir}/${dir.build.tools}/${tool.advpng}"/>
-
-        <!-- osfamily=unix is actually true on OS X as well -->
-        <!-- On *nix's and OS X, check for optipng and give a helpful message if it's not installed -->
+       
+       <if>
+            <os family="windows"/>
+              <then>
+                 <var name="advpng.available" value="true"/>
+                 <var name="advpng.executable" value="${basedir}/${dir.build.tools}/${tool.advpng}"/>
+              </then>
+        </if>      
         <if>
-            <os family="unix"/>
+          <os family="unix"/>      
             <then>
-                <if>
-                    <!-- Then check for availability if unix -->
-                    <available file="advpng" filepath="${ENV.PATH}"/>
-                    <then>
-                        <var name="advpng.executable" value="advpng"/>
-                        </then>
-                    <else>
-                        <var name="advpng.available" value="false"/>
-                    </else>
-                </if>
+              <var name="advpng.executable" value="advpng"/>
             </then>
+        </if>    
+        <if>
+          <not>
+             <available file="advpng" filepath="${ENV.PATH}"/>
+          </not>
+          <then>
+            <var name="advpng.available" value="false"/>
+          </then>
         </if>
-
-        <!-- Now check for availability -->
+        
         <if>
             <equals arg1="${advpng.available}" arg2="true"/>
             <then>
@@ -1107,7 +1160,7 @@
                             </then>
                         </if>
 
-                        <apply executable="${advpng.executable}" dest="./${dir.publish}/${relative.image.dir}/" osfamily="${os.family}">
+                        <apply executable="${advpng.executable}" dest="./${dir.publish}/${relative.image.dir}/">
                           <fileset dir="./${dir.publish}/${relative.image.dir}/" includes="**/*.png"  excludes="${images.bypass}, ${images.default.bypass}"/>
                           <arg line="-z"/>
                           <arg line="-4"/>
@@ -1126,43 +1179,44 @@
             </else>
         </if>
     </target>
+
     <target name="-imagesjpg" depends="-mkdirs" description="(PRIVATE) Optimizes .jpg images using jpegtan">
         <echo message="Now, we clean up those jpgs..."/>
-
-        <!-- By default set retain-meta-tags to all -->
-        <var name="retain-meta-tags" value="all"/>
-
-        <if>
+         <if>
             <equals arg1="${images.strip.metadata}" arg2="true"/>
             <then>
                 <var name="retain-meta-tags" value="none"/>
             </then>
+            <else>
+              <var name="retain-meta-tags" value="all"/>
+            </else>  
         </if>
-
-        <!-- By default set jpegtran exec to windows's exe and set it to available -->
-        <var name="os.family" value="windows"/>
-        <var name="jpegtran.available" value="true"/>
-        <var name="jpegtran.executable" value="${basedir}/${dir.build.tools}/jpegtran.exe"/>
-
-        <!-- On *nix's and OS X, check for jpegtran and give a helpful message if it's not installed -->
         <if>
-            <os family="unix"/>
-            <then>
-                <var name="os.family" value="unix"/>
-                <!-- Change the exec for *nix systems -->
-                <var name="jpegtran.executable" value="jpegtran"/>
-                <if>
-                    <not>
-                        <available file="jpegtran" filepath="${ENV.PATH}"/>
-                    </not>
-                    <then>
-                        <!-- Set it to unavailable -->
-                        <var name="jpegtran.available" value="false"/>
-                    </then>
-                </if>
-            </then>
+            <os family="windows"/>
+              <then>
+                 <var name="jpegtran.available" value="true"/>
+                 <var name="jpegtran.executable" value="${basedir}/${dir.build.tools}/${tool.jpegtran}"/>
+              </then>
         </if>
-
+        <if>
+          <os family="unix"/>      
+            <then>
+              <var name="jpegtran.executable" value="jpegtran"/>
+            </then>
+        </if>    
+        <if>
+          <not>
+            <available file="jpegtran" filepath="${ENV.PATH}"/>
+          </not>
+           
+          <then>
+            <var name="jpegtran.available" value="false"/>
+          </then>
+          <else>
+            <var name="jpegtran.available" value="true"/>
+          </else>  
+        </if>
+        
         <!-- If jpegtran is available, let's start it -->
         <if>
             <equals arg1="${jpegtran.available}" arg2="true"/>
@@ -1187,7 +1241,7 @@
                             </then>
                         </if>
 
-                        <apply executable="${jpegtran.executable}" dest="./${dir.publish}/${relative.image.dir}" osfamily="${os.family}">
+                        <apply executable="${jpegtran.executable}" dest="./${dir.publish}/${relative.image.dir}">
                             <fileset dir="${dir.source}/${relative.image.dir}" includes="**/*.jpg"  excludes="${images.bypass}, ${images.default.bypass}"/>
                             <arg value="-copy"/>
                             <arg value="${retain-meta-tags}"/>
