@@ -74,7 +74,23 @@
   * FUNCTION TARGETS OVERRIDES                    *
   *************************************************
   -->
-  
+
+  <target name="-copy" depends="-mkdirs">
+    <!-- This is a private target -->
+      
+    <echo message="Copying over new files..."/>
+    <copy todir="./${dir.publish}" includeEmptyDirs="false">
+      <fileset dir="${dir.source}/" excludes="${file.default.exclude}, ${file.exclude}">
+        <!-- exclude files that are superseded by optimized versions with different names -->
+        <!-- this is not strictly necessary, but it avoids putting unreferenced files into your server -->
+        <exclude name="**/*.js"/>
+        <exclude name="${dir.js.modules}"/>
+        <exclude name="${dir.css}/**/*.css"/>
+      </fileset>
+    </copy>
+    <echo message="A copy of all new non-dev files are now in: ./${dir.publish}."/>
+  </target>
+
   <target name="-mkdirs">
     <condition property="publish.exists">
       <available file="${dir.publish}" type="dir" />
@@ -118,6 +134,57 @@
     </if>
   </target>
 
+  <target name="-js.main.concat" depends="-js.all.minify" description="(PRIVATE) Concatenates the JS files in dir.js">
+    <echo message="Concatenating Main JS scripts based on ${file.root.page}..." />
+    <!-- Concatenate scripts to intermediate/js/libs/libs.js -->
+    <!-- overwrite=no here means not to overwrite if the target is newer than the sources -->
+    <!-- Filter out byte order marks (see http://stackoverflow.com/questions/2742735/get-ant-concat-to-ignore-boms) -->
+    <concat destfile="./${dir.intermediate}/${dir.js}/scripts-concat.min.js" overwrite="no">
+      <filelist dir="./${dir.intermediate}/" files="${scriptsToConcat}" />
+      <filterchain>
+        <deletecharacters chars="&#xFEFF;" />
+      </filterchain>
+    </concat>      
+  </target>
+
+  <target name="-js.scripts.concat" depends="-js.main.concat" if="build.concat.scripts">
+    <echo message="Concatenating library file with main script file" />
+    <if>
+      <available file="${dir.intermediate}/${dir.js}/scripts-concat.min.js" />
+      <then>
+        <checksum file="${dir.intermediate}/${dir.js}/scripts-concat.min.js" algorithm="sha" property="scripts.fullsha" />
+        <propertyregex property="scripts.sha" input="${scripts.fullsha}" regexp=".{${hash.length}}" select="\0" />
+        <property name="scripts.js" value="${dir.js}/${scripts.sha}.js" />
+        <copy file="${dir.intermediate}/${dir.js}/scripts-concat.min.js" tofile="${dir.publish}/${dir.js}/${scripts.sha}.js" />
+      </then>
+    </if>
+    
+    <!-- cachebust modules directory name -->
+    <!-- Concatinate only to generate checksum. Concatinated file not actually published. -->
+    <if>
+      <available file="./${dir.intermediate}/${dir.js.modules}" />
+      <then>
+        <concat destfile="./${dir.intermediate}/${dir.js.modules}/_all.js" overwrite="no">
+          <fileset dir="./${dir.intermediate}/${dir.js.modules}/">
+            <include name="*.js" />
+          </fileset>
+        </concat>
+        <if>
+          <available file="./${dir.intermediate}/${dir.js.modules}/_all.js" />
+          <then>
+            <checksum file="${dir.intermediate}/${dir.js.modules}/_all.js" algorithm="sha" property="modules.fullsha" />
+            <propertyregex property="modules.sha" input="${modules.fullsha}" regexp=".{${hash.length}}" select="\0" />
+            <property name="modules.js.dir" value="${dir.js}/${modules.sha}" />
+            <move file="${dir.publish}/${dir.js.modules}/" tofile="${dir.publish}/${dir.js}/${modules.sha}/" />
+            <copy todir="${dir.publish}/${dir.js}/${modules.sha}/" >
+              <fileset dir="${dir.intermediate}/${dir.js.modules}" includes="**/**.js" excludes="_all.js" />
+            </copy>
+          </then>
+        </if>
+      </then>
+    </if>
+  </target>
+
   <target name="-js.all.minify" depends="-mkdirs, -js.ember.handlebars" description="(PRIVATE) Minifies the scripts.js files created by js.scripts.concat">
     <if>
       <and>
@@ -156,18 +223,24 @@
           <targetfile />
         </apply>
 
+        <echo message="Building list of minified scripts to concatenate" />
+        <filelist id="file.root" dir="${dir.source}" files="${file.root.page}" />
+        <exec executable="java" outputproperty="scriptsToConcat">
+          <arg value="-classpath" />
+          <arg value="${dir.build.tools}" />
+          <arg value="FindAttribute" />
+          <arg value="${file.root.page}" />
+          <arg value="${build.jstoken}" />
+          <arg value="script" />
+          <arg value="src" />
+        </exec>
+
         <!-- at this point all js files are minified with their original names -->
-      
+
+        <propertyregex property="scriptsToConcatExclude" input="${scriptsToConcat}" regexp="\n" replace="," global="true" />
+
         <copy todir="${dir.publish}">
-          <fileset dir="${dir.intermediate}" includes="${file.js.bypass}, ${slug.libs}/*, ${slug.modules}/*, **/*.js">
-            <exclude name="scripts-concat.js" />
-            <exclude name="scripts-concat.min.js" />
-            <exclude name="otherscripts-concat.js" />
-            <exclude name="main.js" />
-            <exclude name="plugins.js" />
-            <exclude name="pre-app.js" />
-            <exclude name="${file.root.script}" />
-          </fileset>
+          <fileset dir="${dir.intermediate}" includes="${file.js.bypass}, ${slug.libs}/*, ${slug.modules}/*, **/*.js" excludes="${scriptsToConcatExclude}" />
         </copy>
       </then>
       <else>
