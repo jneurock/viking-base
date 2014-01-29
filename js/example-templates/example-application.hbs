@@ -1,5 +1,17 @@
 <section class="row">
-  <div class="large-12 columns">
+  <div class="large-9 columns">
     <h1>Hello Vikings</h1>
+  </div>
+
+  <div class="large-3 columns">
+    <p>
+      The following line items came from the model:
+    </p>
+
+    <ul>
+      {{#each item in model}}
+        <li>{{item}}</li>
+      {{/each}}
+    </ul>
   </div>
 </section>

@@ -40,7 +40,7 @@ var
       from: 'bower_components/viking-base/js/example-templates/example-application.hbs',
       to: 'js/templates/application.hbs'
     }, {
-      from: 'bower_components/ember-starter-kit/js/app.js',
+      from: 'bower_components/viking-base/js/example-app.js',
       to: 'js/app/app.js'
     }],
     // Require the file system module
