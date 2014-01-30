@@ -63,7 +63,7 @@
   -->
   
   <target name="-text.production" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -js.all.minify, -js.main.concat, -js.scripts.concat, -css, -usemin, -htmlclean, -copy"/>
-  <target name="-build.debugcss" depends="version, -needhtmlrefresh, -css" />
+  <target name="-build.debugcss" depends="version, -css" />
   <target name="-build.debug" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -needhtmlrefresh, -css, -htmlclean, -copyall" />
   <target name="-build.debugdocs" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -needhtmlrefresh, -css, -htmlclean, -copyall, -jsdoc3" />
   <target name="-build.debughbs" depends="version, -js.ember.handlebars.copy" />
@@ -465,6 +465,15 @@
         </apply>
       </then>
       <else>
+        <delete>
+          <fileset dir="${dir.publish}" includes="**/*.css" />
+        </delete>
+
+        <!-- force the files to be overwritten with older copies from source if needhtmlrefresh is set -->
+        <copy todir="${dir.intermediate}" overwrite="true">
+            <fileset dir="${dir.source}" includes="${page-files}"/>
+        </copy>
+
         <var name="matchRegex" value="" />
         <var name="replaceRegex" value="" />
 
@@ -481,6 +490,10 @@
         <replaceregexp match="&lt;link(.+)href=['&quot;]?(.*)${dir.css}/${file.root.stylesheet}(?:\?.*)?['&quot;\s]?(.*/?&gt;)" replace="&lt;link\1href=&quot;\2${dir.css.default}/${css.sha}.css&quot;\3" flags="m">
           <fileset dir="${dir.intermediate}" includes="${page-files}" />
         </replaceregexp>
+
+        <copy todir="${dir.publish}">
+          <fileset dir="${dir.intermediate}" includes="${page-files}" />
+        </copy>
       </else>
     </if>
 
