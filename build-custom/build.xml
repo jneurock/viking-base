@@ -104,7 +104,7 @@
         <equals arg1="${dir.publish}" arg2=".." />
         <equals arg1="${dir.publish}" arg2="/" />
         <equals arg1="${dir.publish}" arg2="./" />
-        <equals arg1="${dir.publish}" arg2="../ "/>
+        <equals arg1="${dir.publish}" arg2=".." />
       </or>
       <then>
         <fail message="Your dir.publish folder is set to ${dir.publish} which could delete your entire site or worse. Change it in project.properties" />
