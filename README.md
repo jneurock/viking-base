@@ -8,7 +8,7 @@ The package exists to accomplish a few main goals:
 
 Currently, the package consists of:
 
-* Ember 1.3.1
+* Ember 1.4
 * Handlebars 1.1.2
 * Foundation 5.0.3
 * HTML5 Boilerplate Ant Build Script 1.0
