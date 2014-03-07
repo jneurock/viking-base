@@ -10,8 +10,8 @@ Currently, the package consists of:
 
 * Ember 1.4
 * Handlebars 1.1.2
-* Foundation 5.0.3
-* HTML5 Boilerplate Ant Build Script 1.0
+* Foundation 5.2
+* HTML5 Boilerplate Ant Build Script
 * HTML5 Boilerplate 4.3
 * Modernizr 2.7.1
 * Respond 1.4.1
