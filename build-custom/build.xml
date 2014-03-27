@@ -16,50 +16,51 @@
   <!-- Jar phase default -->
   <property name="jarPhase" value="package" />
 
-  <!-- Debug target -->
-  <target name="debug">
-    <echo message="Building a Debug Environment..." />
-    <antcall target="-build.debug" />
-  </target>
-
-  <!-- CSS target -->
-  <target name="debugcss">
-    <echo message="Building CSS only..." />
-    <antcall target="-build.debugcss" />
-  </target>
-
-  <!-- Debug with documentation target -->
-  <target name="debugdocs">
-    <echo message="Building a Debug Environment with documentation..." />
-    <antcall target="-build.debugdocs" />
-  </target>
-
-  <!--Documentation target -->
-  <target name="docs">
-    <echo message="Building documentation only..." />
-    <antcall target="-build.docs" />
-  </target>
-
-  <!-- Handlebars target -->
-  <target name="debughbs">
-    <echo message="Compiling Handlebars templates only..." />
-    <antcall target="-build.debughbs" />
-  </target>
-
-  <!-- JavaScript target -->
-  <target name="debugjs">
-    <echo message="Building JavaScript only..." />
-    <antcall target="-build.debugjs" />
-  </target>
-
   <!--
   *************************************************
   * BASE TARGETS                                  *
   *************************************************
   -->
 
+  <!-- Does not clean build output -->
   <target name="noclean">
     <echo message="Not cleaning previously published files..." />
+  </target>
+
+  <!-- Debug target -->
+  <target name="debug" depends="-clean">
+    <echo message="Building a Debug Environment..." />
+    <antcall target="-build.debug" />
+  </target>
+
+  <!-- CSS target -->
+  <target name="debugcss" depends="noclean">
+    <echo message="Building CSS only..." />
+    <antcall target="-build.debugcss" />
+  </target>
+
+  <!-- Debug with documentation target -->
+  <target name="debugdocs" depends="-clean">
+    <echo message="Building a Debug Environment with documentation..." />
+    <antcall target="-build.debugdocs" />
+  </target>
+
+  <!--Documentation target -->
+  <target name="docs" depends="noclean">
+    <echo message="Building documentation only..." />
+    <antcall target="-build.docs" />
+  </target>
+
+  <!-- Handlebars target -->
+  <target name="debughbs" depends="noclean">
+    <echo message="Compiling Handlebars templates only..." />
+    <antcall target="-build.debughbs" />
+  </target>
+
+  <!-- JavaScript target -->
+  <target name="debugjs" depends="noclean">
+    <echo message="Building JavaScript only..." />
+    <antcall target="-build.debugjs" />
   </target>
 
   <!--

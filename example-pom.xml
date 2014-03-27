@@ -15,59 +15,10 @@
   <packaging>pom</packaging>
 
   <properties>
-    <ant_clean>clean</ant_clean>
-    <ant_target>text</ant_target>
+    <antTarget>text</antTarget>
     <jarPhase>package</jarPhase>
     <skipTests>true</skipTests>
   </properties>
-
-  <profiles>
-    <profile>
-      <id>debug</id>
-      <properties>
-        <ant_target>debug</ant_target>
-      </properties>
-    </profile>
-
-    <profile>
-      <id>debugcss</id>
-      <properties>
-        <ant_clean>noclean</ant_clean>
-        <ant_target>debugcss</ant_target>
-      </properties>
-    </profile>
-
-    <profile>
-      <id>debugdocs</id>
-      <properties>
-        <ant_target>debugdocs</ant_target>
-      </properties>
-    </profile>
-
-    <profile>
-      <id>docs</id>
-      <properties>
-        <ant_clean>noclean</ant_clean>
-        <ant_target>docs</ant_target>
-      </properties>
-    </profile>
-
-    <profile>
-      <id>debughbs</id>
-      <properties>
-        <ant_clean>noclean</ant_clean>
-        <ant_target>debughbs</ant_target>
-      </properties>
-    </profile>
-
-    <profile>
-      <id>debugjs</id>
-      <properties>
-        <ant_clean>noclean</ant_clean>
-        <ant_target>debugjs</ant_target>
-      </properties>
-    </profile>
-  </profiles>
 
   <build>
     <plugins>
@@ -87,8 +38,7 @@
                 
                 <ant antfile="${basedir}/bower_components/viking-base/build-custom/build.xml">
                   <property name="jarPhase" value="${jarPhase}" />
-                  <target name="${ant_clean}" />
-                  <target name="${ant_target}" />
+                  <target name="${antTarget}" />
                 </ant>
               </target>
             </configuration>
