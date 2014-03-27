@@ -46,6 +46,12 @@
     <antcall target="-build.debughbs" />
   </target>
 
+  <!-- JavaScript target -->
+  <target name="debugjs">
+    <echo message="Building JavaScript only..." />
+    <antcall target="-build.debugjs" />
+  </target>
+
   <!--
   *************************************************
   * BASE TARGETS                                  *
@@ -67,6 +73,7 @@
   <target name="-build.debug" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -needhtmlrefresh, -css, -htmlclean, -copyall" />
   <target name="-build.debugdocs" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -needhtmlrefresh, -css, -htmlclean, -copyall, -jsdoc3" />
   <target name="-build.debughbs" depends="version, -js.ember.handlebars.copy" />
+  <target name="-build.debugjs" depends="version, -copyall" />
   <target name="-build.docs" depends="version, -jsdoc3" />
 
   <!--

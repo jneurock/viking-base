@@ -68,6 +68,7 @@ You can build your project with Maven or Ant. The build command should be execut
 * debugcss - Concatenates but does not minify CSS files.
 * debugdocs - Same as "debug" target but also generates JSDoc documentation.
 * debughbs - If you just need to publish updates to your Handlebars templates.
+* debugjs - If you just need to publish updates to your JavaScript files.
 * docs - Generates JSDoc documentation only.
 
 When the build is finished, you should have a publish directory containing your project output (unless only building documentation). Documentation will be output to the "docs" directory in the project root.

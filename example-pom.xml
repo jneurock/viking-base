@@ -59,6 +59,14 @@
         <ant_target>debughbs</ant_target>
       </properties>
     </profile>
+
+    <profile>
+      <id>debugjs</id>
+      <properties>
+        <ant_clean>noclean</ant_clean>
+        <ant_target>debugjs</ant_target>
+      </properties>
+    </profile>
   </profiles>
 
   <build>
