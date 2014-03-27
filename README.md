@@ -29,7 +29,7 @@ bower install viking-base
 node bower_components/viking-base/example-install
 
 # Build the debug version of the Hello Vikings app with Maven or Ant
-mvn clean package -D antTarget=debug
+mvn clean package -D target=debug
 or
 ant -f bower_components/viking-base/build-custom debug
 ```
@@ -80,7 +80,7 @@ No target:
 `mvn clean package`
 
 Some target:
-`mvn clean package -D antTarget=<target-name>`
+`mvn clean package -D target=<target-name>`
 
 ## Building with Ant
 `ant -f bower_components/viking-base/build-custom <optional-target-name>`

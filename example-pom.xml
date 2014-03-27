@@ -15,7 +15,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <antTarget>text</antTarget>
+    <target>text</target>
     <jarPhase>package</jarPhase>
     <skipTests>true</skipTests>
   </properties>
@@ -38,7 +38,7 @@
                 
                 <ant antfile="${basedir}/bower_components/viking-base/build-custom/build.xml">
                   <property name="jarPhase" value="${jarPhase}" />
-                  <target name="${antTarget}" />
+                  <target name="${target}" />
                 </ant>
               </target>
             </configuration>
