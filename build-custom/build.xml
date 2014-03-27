@@ -69,12 +69,12 @@
   *************************************************
   -->
   
-  <target name="-text.production" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -js.all.minify, -js.main.concat, -js.scripts.concat, -css, -usemin, -htmlclean, -copy"/>
+  <target name="-text.production" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -js.all.minify, -js.main.concat, -js.scripts.concat, -css, -usemin, -htmlclean, -copy" />
   <target name="-build.debugcss" depends="version, -css" />
   <target name="-build.debug" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -needhtmlrefresh, -css, -htmlclean, -copyall" />
   <target name="-build.debugdocs" depends="version, -intro, jar, -mkdirs, -js.ember.handlebars, -needhtmlrefresh, -css, -htmlclean, -copyall, -jsdoc3" />
   <target name="-build.debughbs" depends="version, -js.ember.handlebars.copy" />
-  <target name="-build.debugjs" depends="version, -copyall" />
+  <target name="-build.debugjs" depends="version, -copyjs" />
   <target name="-build.docs" depends="version, -jsdoc3" />
 
   <!--
@@ -83,20 +83,14 @@
   *************************************************
   -->
 
-  <target name="-copy" depends="-mkdirs">
+  <target name="-copyjs" depends="-mkdirs">
     <!-- This is a private target -->
-      
-    <echo message="Copying over new files..."/>
-    <copy todir="./${dir.publish}" includeEmptyDirs="false">
-      <fileset dir="${dir.source}/" excludes="${file.default.exclude}, ${file.exclude}">
-        <!-- exclude files that are superseded by optimized versions with different names -->
-        <!-- this is not strictly necessary, but it avoids putting unreferenced files into your server -->
-        <exclude name="**/*.js"/>
-        <exclude name="${dir.js.modules}"/>
-        <exclude name="${dir.css}/**/*.css"/>
-      </fileset>
+    <!-- Copies all files, including .css and .js files for when you aren't minifying-->
+    <echo message="Copying over all files..." />
+    <copy todir="./${dir.publish}">
+      <fileset dir="${dir.source}/" includes="**/*.js" excludes="${file.default.exclude}, ${file.exclude}" />
     </copy>
-    <echo message="A copy of all new non-dev files are now in: ./${dir.publish}."/>
+    <echo message="A copy of JavaScript files are now in: ./${dir.publish}." />
   </target>
 
   <target name="-mkdirs">
