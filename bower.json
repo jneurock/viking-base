@@ -1,6 +1,6 @@
 {
   "name": "viking-base",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "ignore": [
     ".gitignore",
     "bower.json",
@@ -8,7 +8,7 @@
     "target"
   ],
   "dependencies": {
-    "ember-starter-kit": "1.4.0",
+    "ember-starter-kit": "1.5.0",
     "foundation": "5.2.1",
     "handlebars": "1.1.2",
     "jquery": "2.1.0",
