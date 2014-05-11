@@ -31,6 +31,10 @@ var rootPath = (process.argv[3] && process.argv[3] === '--gulpfile') ? '../../..
       hbs: rootPath + 'hbs/**/*.hbs',
       html: rootPath + '*.html',
       js: rootPath + 'js/**/*.js',
+      jsDoc: [
+        rootPath + 'js/*.js',
+        rootPath + 'js/app/**/*.js'
+      ],
       sass: rootPath + 'scss/style.scss'
     },
     util = require('util'),
@@ -122,6 +126,23 @@ function gulpSrc( opts, jsDev, cb ) {
   return es.duplex( paths, files );
 }
 
+// Replace JavaScript output paths
+function replaceJsSources( sources ) {
+
+  var i = 0,
+      files = [],
+      pathSegments = [];
+
+  for ( ; i < sources.length; i++ ) {
+
+    pathSegments = sources[i].split('/');
+
+    files.push( output.js + pathSegments[ (pathSegments.length - 1) ]);
+  }
+
+  return files;
+}
+
 // Clean build output
 gulp.task('clean', function() {
 
@@ -151,7 +172,7 @@ gulp.task('handlebars', function() {
 // Generate JSDoc documentation
 gulp.task('js-doc', ['clean-docs'], function() {
 
-  return gulp.src( sources.js )
+  return gulp.src( sources.jsDoc )
     .pipe( plugins.jsdoc( output.docs ) );
 });
 
@@ -188,7 +209,7 @@ gulp.task('build', ['handlebars', 'js-doc'], function() {
           block
             .pipe( gulpSrc( null, true, function( sources ) {
 
-              block.end( sources );
+              block.end( replaceJsSources( sources ) );
             }))
             .pipe( gulp.dest( output.publish + output.js ) );
 
@@ -209,18 +230,7 @@ gulp.task('build', ['handlebars', 'js-doc'], function() {
         block
           .pipe( gulpSrc( null, true, function( sources ) {
 
-            var i = 0,
-                files = [],
-                pathSegments = [];
-
-            for ( ; i < sources.length; i++ ) {
-
-              pathSegments = sources[i].split('/');
-
-              files.push( output.jsVendor + pathSegments[ (pathSegments.length - 1) ]);
-            }
-
-            block.end( files );
+            block.end( replaceJsSources( sources ) );
           }))
           .pipe( plugins.if( prod, plugins.uglify() ) )
           .pipe( gulp.dest( output.publish + output.jsVendor ) );
