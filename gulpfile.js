@@ -1,12 +1,11 @@
-var rootPath = (process.argv[3] && process.argv[3] === '--gulpfile') ? '../../../../../../' : '',
-    cleanOpts = {
-      docs: rootPath + 'docs',
+var cleanOpts = {
+      docs: 'docs',
       force: {
         force: true
       },
       paths: [
-        rootPath + 'js/templates.js',
-        rootPath + 'publish'
+        'js/templates.js',
+        'publish'
       ],
       read: {
         read: false
@@ -19,23 +18,23 @@ var rootPath = (process.argv[3] && process.argv[3] === '--gulpfile') ? '../../..
     jsHash = 'main.js',
     output = {
       css: 'css/',
-      docs: rootPath + 'docs',
-      hbs: rootPath + 'js',
+      docs: 'docs',
+      hbs: 'js',
       js: 'js/',
       jsVendor: 'js/vendor/',
-      publish: rootPath + 'publish/'
+      publish: 'publish/'
     },
     plugins = require('gulp-load-plugins')(),
     prod = false,
     sources = {
-      hbs: rootPath + 'hbs/**/*.hbs',
-      html: rootPath + '*.html',
-      js: rootPath + 'js/**/*.js',
+      hbs: 'hbs/**/*.hbs',
+      html: '*.html',
+      js: 'js/**/*.js',
       jsDoc: [
-        rootPath + 'js/*.js',
-        rootPath + 'js/app/**/*.js'
+        'js/*.js',
+        'js/app/**/*.js'
       ],
-      sass: rootPath + 'scss/style.scss'
+      sass: 'scss/style.scss'
     },
     util = require('util'),
     watch = false;
@@ -94,29 +93,16 @@ function hash( input ) {
 }
 
 // Called by the gulp-htmlbuild plugin
-function gulpSrc( opts, jsDev, cb ) {
+function gulpSrc( opts, cb ) {
 
   var files = es.through(),
       paths = es.through();
 
   paths.pipe( es.writeArray(function( err, sources ) {
 
-    var i = 0,
-        jsDevSources = [];
-
-    for ( ; i < sources.length; i++ ) {
-
-      if ( jsDev ) {
-
-        jsDevSources.push( sources[i] );
-      }
-
-      sources[i] = rootPath + sources[i];
-    }
-
     if ( cb ) {
 
-      cb( jsDevSources );
+      cb( sources );
     }
 
     gulp.src( sources, opts )
@@ -127,17 +113,18 @@ function gulpSrc( opts, jsDev, cb ) {
 }
 
 // Replace JavaScript output paths
-function replaceJsSources( sources ) {
+function replaceJsSources( sources, vendor ) {
 
   var i = 0,
       files = [],
+      outputPath = vendor ? output.jsVendor : output.js,
       pathSegments = [];
 
   for ( ; i < sources.length; i++ ) {
 
     pathSegments = sources[i].split('/');
 
-    files.push( output.js + pathSegments[ (pathSegments.length - 1) ]);
+    files.push( outputPath + pathSegments[ (pathSegments.length - 1) ]);
   }
 
   return files;
@@ -207,7 +194,7 @@ gulp.task('build', ['handlebars', 'js-doc'], function() {
         if ( !prod ) {
 
           block
-            .pipe( gulpSrc( null, true, function( sources ) {
+            .pipe( gulpSrc( null, function( sources ) {
 
               block.end( replaceJsSources( sources ) );
             }))
@@ -228,7 +215,7 @@ gulp.task('build', ['handlebars', 'js-doc'], function() {
       jsvendor: plugins.htmlbuild.preprocess.js(function( block ) {
 
         block
-          .pipe( gulpSrc( null, true, function( sources ) {
+          .pipe( gulpSrc( null, function( sources, true ) {
 
             block.end( replaceJsSources( sources ) );
           }))
@@ -265,7 +252,7 @@ gulp.task('watch', function() {
 
   gulp.watch( sources.sass, ['sass'] );
 
-  gulp.watch( sources.hbs, ['handlebarsWatch'] );
+  gulp.watch( sources.hbs, ['handlebars'] );
 });
 
 // The is what Gulp runs by default
