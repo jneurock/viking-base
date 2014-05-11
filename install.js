@@ -1,106 +1,137 @@
 var
     // An array of objects representing files to copy
-    copyFiles = [{
-      from: 'bower_components/viking-base/example-.gitignore',
-      to: '.gitignore'
-    }, {
-      from: 'bower_components/viking-base/example-404.html',
-      to: '404.html'
-    }, {
-      from: 'bower_components/viking-base/example-index.html',
-      to: 'index.html'
-    }, {
-      from: 'bower_components/viking-base/example-pom.xml',
-      to: 'pom.xml'
-    }, {
-      from: 'bower_components/viking-base/example-humans.txt',
-      to: 'humans.txt'
-    }, {
-      from: 'bower_components/viking-base/example-robots.txt',
-      to: 'robots.txt'
-    }, {
-      from: 'bower_components/viking-base/css/example-style.scss',
-      to: 'css/style.scss'
-    }, {
-      from: 'bower_components/viking-base/img/example-apple-touch-icon-precomposed.png',
-      to: 'apple-touch-icon-precomposed.png'
-    }, {
-      from: 'bower_components/viking-base/img/example-favicon.ico',
-      to: 'favicon.ico'
-    }, {
-      from: 'bower_components/viking-base/js/example-main.js',
-      to: 'js/main.js',
-    }, {
-      from: 'bower_components/viking-base/js/example-plugins.js',
-      to: 'js/plugins.js'
-    }, {
-      from: 'bower_components/viking-base/js/example-pre-app.js',
-      to: 'js/pre-app.js'
-    }, {
-      from: 'bower_components/viking-base/js/example-templates/example-application.hbs',
-      to: 'js/templates/application.hbs'
-    }, {
-      from: 'bower_components/viking-base/js/example-app.js',
-      to: 'js/app/app.js'
-    }],
+    copyFiles = [
+      {
+        canOverride: false,
+        from: 'bower_components/viking-base/.bowerrc',
+        to: '.bowerrc'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/.gitignore',
+        to: '.gitignore'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/404.html',
+        to: '404.html'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/apple-touch-icon-precomposed.png',
+        to: 'apple-touch-icon-precomposed.png'
+      }, {
+        canOverride: true,
+        from: 'bower_components/viking-base/bower.json',
+        to: 'bower.json'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/img/favicon.ico',
+        to: 'favicon.ico'
+      }, {
+        canOverride: true,
+        from: 'bower_components/viking-base/gulpfile.js',
+        to: 'gulpfile.js'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/humans.txt',
+        to: 'humans.txt'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/index.html',
+        to: 'index.html'
+      }, {
+        canOverride: true,
+        from: 'bower_components/viking-base/package.json',
+        to: 'package.json'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/robots.txt',
+        to: 'robots.txt'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/hbs/application.hbs',
+        to: 'hbs/application.hbs'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/js/main.js',
+        to: 'js/main.js',
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/js/plugins.js',
+        to: 'js/plugins.js'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/js/pre-app.js',
+        to: 'js/pre-app.js'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/js/app/app.js',
+        to: 'js/app/app.js'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/js/vendor/jquery-1.11.1.js',
+        to: 'js/vendor/jquery-1.11.1.js'
+      }, {
+        canOverride: false,
+        from: 'bower_components/viking-base/scss/style.scss',
+        to: 'scss/style.scss'
+      }
+    ],
     // Require the file system module
     fs = require('fs'),
     i = 0,
     // An array of directories to make
     makeDirs = [
-      'css',
+      'hbs',
       'js',
       'js/app',
-      'js/templates'
-    ],
-    sourceFile = '',
-    targetFile = '';
+      'js/vendor',
+      'scss'
+    ];
 
 // Copy a file
-function copyFile(source, target) {
+function copyFile( copyFile ) {
 
-  var readFile = fs.createReadStream(source),
+  var readFile = fs.createReadStream( copyFile.from ),
       writeFile = null;
 
   // Try to read the source file
-  readFile.on('error', function(err) {
+  readFile.on('error', function( err ) {
 
-    console.error(err);
+    console.error( err );
   });
 
   // Check if target file exists
-  if (!fs.existsSync(target)) {
+  if ( copyFile.canOverride || !fs.existsSync( copyFile.to ) ) {
 
-    writeFile = fs.createWriteStream(target);
+    writeFile = fs.createWriteStream( copyFile.to );
 
     // Try to create the target file
-    writeFile.on('error', function(err) {
+    writeFile.on('error', function( err ) {
 
-      console.error(err);
+      console.error( err );
     });
 
-    writeFile.on('close', function(ex) {
+    writeFile.on('close', function( ex ) {
 
-      console.info('  Copied: ' + source + ' to ' + target);
+      console.info('  Copied: ' + copyFile.from + ' to ' + copyFile.to);
     });
 
     // Read the contents of the source file into the target file
-    readFile.pipe(writeFile);
+    readFile.pipe( writeFile );
 
   } else {
 
-    console.warn('  File exists: ' + target + '. Did not copy.');
+    console.warn('  File exists: ' + copyFile.to + '. Did not copy.');
   }
 }
 
 console.info('Creating base project directories...');
 
 // Create some needed folders
-for (i = 0; i < makeDirs.length; i++) {
+for ( i = 0; i < makeDirs.length; i++ ) {
 
-  if (!fs.existsSync(makeDirs[i])) {
+  if ( !fs.existsSync( makeDirs[i] ) ) {
 
-    fs.mkdir(makeDirs[i]);
+    fs.mkdir( makeDirs[i] );
 
     console.info('  ' + makeDirs[i]);
 
@@ -110,13 +141,10 @@ for (i = 0; i < makeDirs.length; i++) {
   }
 }
 
-console.info('Copying example files...');
+console.info('Copying scaffolding files...');
 
 // Copy each file in the array
-for (i = 0; i < copyFiles.length; i++) {
+for ( i = 0; i < copyFiles.length; i++ ) {
 
-  sourceFile = copyFiles[i].from;
-  targetFile = copyFiles[i].to;
-
-  copyFile(sourceFile, targetFile);
+  copyFile( copyFiles[i] );
 }
