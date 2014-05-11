@@ -23,7 +23,7 @@ var
         to: 'bower.json'
       }, {
         canOverride: false,
-        from: 'bower_components/viking-base/img/favicon.ico',
+        from: 'bower_components/viking-base/favicon.ico',
         to: 'favicon.ico'
       }, {
         canOverride: true,
