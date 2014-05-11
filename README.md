@@ -1,4 +1,4 @@
-Viking Base is an opinionated package intended to provide a solid starting point for building web applications. The package consists of several key components: Ember.js, Handlebars.js, Foundation and Gulp. Viking Base leans on Bower to manage dependencies and gulp to build while providing a simple scaffolding script.
+Viking Base is an opinionated package intended to provide a solid starting point for building web applications. The package consists of several key components: Ember.js, Handlebars.js, Foundation and gulp. Viking Base leans on Bower to manage dependencies and gulp to build while providing a simple scaffolding script.
 
 Currently, the package consists of:
 
@@ -36,7 +36,7 @@ Viking Base includes three gulp build targets: dev, prod and default (which does
     * Hash CSS and JavaScript ouput file names
 
 **default**  
-The `default` build runs a `dev` build first and then watches Sass and Handlebars resources for changes. There is no need to tell Gulp which build to run in this case. Simply run Gulp:  
+The `default` build runs a `dev` build first and then watches Sass and Handlebars resources for changes. There is no need to tell gulp which build to run in this case. Simply run gulp:  
 `gulp`
 
 **dev**  
@@ -49,13 +49,13 @@ The `prod` build does the same thing as the `dev` build but also concatenates an
 
 ## Updating Viking Base
 
-Updates to Viking Base may consist of simple dependency updates or Gulp file updates. To update Viking base run:  
+Updates to Viking Base may consist of simple dependency updates or gulp file updates. To update Viking base run:  
 `bower update`
 
-After the Bower update, you can run the scaffolding script again in case Gulp file updates are available. Note: If you’ve customized your Gulp file or package.json file, you should make backups before running the scaffolding script again so you can merge your changes with the new Gulp file manually.  
+After the Bower update, you can run the scaffolding script again in case gulp file updates are available. Note: If you’ve customized your gulp file or package.json file, you should make backups before running the scaffolding script again so you can merge your changes with the new gulp file manually.  
 `node bower_components/viking-base/install`
 
-If there were any Gulp dependency updates, it might be good to update them, too:  
+If there were any gulp dependency updates, it might be good to update them, too:  
 `npm update`
 
 ## References
