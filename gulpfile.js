@@ -215,9 +215,9 @@ gulp.task('build', ['handlebars', 'js-doc'], function() {
       jsvendor: plugins.htmlbuild.preprocess.js(function( block ) {
 
         block
-          .pipe( gulpSrc( null, function( sources, true ) {
+          .pipe( gulpSrc( null, function( sources ) {
 
-            block.end( replaceJsSources( sources ) );
+            block.end( replaceJsSources( sources, true ) );
           }))
           .pipe( plugins.if( prod, plugins.uglify() ) )
           .pipe( gulp.dest( output.publish + output.jsVendor ) );
