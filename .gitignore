@@ -12,11 +12,3 @@ Icon
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# JSDoc #
-#########
-docs/
-
-# node.js modules #
-###################
-node_modules/

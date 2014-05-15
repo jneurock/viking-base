@@ -7,7 +7,7 @@ var
         to: '.bowerrc'
       }, {
         canOverride: false,
-        from: 'bower_components/viking-base/.gitignore',
+        from: 'bower_components/viking-base/gitignore',
         to: '.gitignore'
       }, {
         canOverride: false,
