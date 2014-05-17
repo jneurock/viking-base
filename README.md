@@ -47,16 +47,56 @@ The `dev` build is similar to the `prod` build except that it doesn’t minify o
 The `prod` build does the same thing as the `dev` build but also concatenates and minifies CSS and JavaScript resources. The `prod` build also hashes the output file names. To run the prod build:  
 `gulp prod`
 
+## Extending Viking Base
+The Viking Base node module provides a simple API for adding, removing or modifying gulp tasks. Every part of the gulp build is configurable. Here are the main configurable aspects of the build:
+
+* gulp tasks
+* Input sources
+* Output paths
+* Watch dependencies
+* Clean task options
+
+When gulpfiles.js requires the node module, the module exportss a simple hash that can be manipulated any way you'd like. See `bower_components/viking-base/node_modules/viking-base/index.js` as a reference. This approach allows for Bower updates of Viking Base to bring in bug fixes and new features without writing over your build customizations.
+
+To customize the build, edit `gulpfile.js`. In the following example, we'll add a simple image task. You will see how a new task can be added that also becomes a dependency of a built-in task. 
+
+Example:
+
+```javascript
+// Output updates
+vb.output.img = 'img/';
+
+// Source updates
+vb.sources.img = 'img/**/*';
+
+// Task updates
+vb.tasks.build.depends = [
+  'handlebars',
+  'img',
+  'js-doc',
+  'root'
+];
+
+vb.tasks.handlebars.depends = ['img'];
+
+vb.tasks.img = {
+  cb: function() {
+
+    return gulp.src( this.sources.img )
+      .pipe( gulp.dest( this.output.publish + this.output.img ) );
+  }
+};
+
+// Modify tasks as you need before calling vb.registerGulpTasks
+vb.registerGulpTasks();
+```
+
 ## Updating Viking Base
 
 Updates to Viking Base may consist of simple dependency updates or gulp file updates. To update Viking base run:  
 `bower update`
 
-After the Bower update, you can run the scaffolding script again in case gulp file updates are available. Note: If you’ve customized your gulp file or package.json file, you should make backups before running the scaffolding script again so you can merge your changes with the new gulp file manually.  
-`node bower_components/viking-base/install`
-
-If there were any gulp dependency updates, it might be good to update them, too:  
-`npm update`
+**Note:** Though unlikely, it is possible that Viking Base might have node module dependency updates. You can compare `bower_components/viking-base/package.json` with your project's `package.json` if you update Viking Base to a new major or minor version. Patch version updates should not contain node module dependency updates.
 
 ## References
 * [node.js](http://nodejs.org/)
