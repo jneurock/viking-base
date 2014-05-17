@@ -13,6 +13,10 @@ Icon
 ehthumbs.db
 Thumbs.db
 
+# Bower manifest #
+##################
+.bower.json
+
 # JSDoc #
 #########
 docs/

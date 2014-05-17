@@ -2,6 +2,10 @@ var
     // An array of objects representing files to copy
     copyFiles = [
       {
+        canOverride: true,
+        from: 'bower_components/viking-base/.bower.json',
+        to: '.bower.json'
+      }, {
         canOverride: false,
         from: 'bower_components/viking-base/.bowerrc',
         to: '.bowerrc'
@@ -17,10 +21,6 @@ var
         canOverride: false,
         from: 'bower_components/viking-base/apple-touch-icon-precomposed.png',
         to: 'apple-touch-icon-precomposed.png'
-      }, {
-        canOverride: true,
-        from: 'bower_components/viking-base/bower.json',
-        to: 'bower.json'
       }, {
         canOverride: false,
         from: 'bower_components/viking-base/favicon.ico',
