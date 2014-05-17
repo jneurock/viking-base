@@ -56,7 +56,7 @@ The Viking Base node module provides a simple API for adding, removing or modify
 * Watch dependencies
 * Clean task options
 
-When gulpfiles.js requires the node module, the module exportss a simple hash that can be manipulated any way you'd like. See `bower_components/viking-base/node_modules/viking-base/index.js` as a reference. This approach allows for Bower updates of Viking Base to bring in bug fixes and new features without writing over your build customizations.
+When gulpfiles.js requires the node module, the module exports a simple hash that can be manipulated any way you'd like. See `bower_components/viking-base/node_modules/viking-base/index.js` as a reference. This approach allows for Bower updates of Viking Base to bring in bug fixes and new features without writing over your build customizations.
 
 To customize the build, edit `gulpfile.js`. In the following example, we'll add a simple image task. You will see how a new task can be added that also becomes a dependency of a built-in task. 
 
