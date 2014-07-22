@@ -2,10 +2,6 @@ var
     // An array of objects representing files to copy
     copyFiles = [
       {
-        canOverride: true,
-        from: 'bower_components/viking-base/.bower.json',
-        to: '.bower.json'
-      }, {
         canOverride: false,
         from: 'bower_components/viking-base/.bowerrc',
         to: '.bowerrc'
