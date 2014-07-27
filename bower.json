@@ -1,6 +1,6 @@
 {
   "name": "viking-base",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "dependencies": {
     "ember-starter-kit": "1.6.1",
     "foundation": "5.3.1",
