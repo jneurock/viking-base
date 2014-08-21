@@ -2,9 +2,9 @@ Viking Base is an opinionated package intended to provide a solid starting point
 
 Currently, the package consists of:
 
-* Ember.js 1.6.1
+* Ember.js 1.7.0
 * Handlebars.js 1.1.2
-* Foundation 5.3.1
+* Foundation 5.3.3
 * Modernizr 2.8.3
 * Respond 1.4.2
 
