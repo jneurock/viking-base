@@ -71,6 +71,7 @@ var
         to: 'scss/style.scss'
       }
     ],
+    cfLen = copyFiles.length,
     // Require the file system module
     fs = require('fs'),
     i = 0,
@@ -81,7 +82,8 @@ var
       'js/app',
       'js/vendor',
       'scss'
-    ];
+    ],
+    mdLen = makeDirs.length;
 
 // Copy a file
 function copyFile( copyFile ) {
@@ -123,7 +125,7 @@ function copyFile( copyFile ) {
 console.info('Creating base project directories...');
 
 // Create some needed folders
-for ( i = 0; i < makeDirs.length; i++ ) {
+for ( i = 0; i < mdLen; i++ ) {
 
   if ( !fs.existsSync( makeDirs[i] ) ) {
 
@@ -140,7 +142,7 @@ for ( i = 0; i < makeDirs.length; i++ ) {
 console.info('Copying scaffolding files...');
 
 // Copy each file in the array
-for ( i = 0; i < copyFiles.length; i++ ) {
+for ( i = 0; i < cfLen; i++ ) {
 
   copyFile( copyFiles[i] );
 }
