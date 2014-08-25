@@ -1,4 +1,4 @@
-Viking Base is an opinionated package intended to provide a solid starting point for building web applications. The package consists of several key components: Ember.js, Handlebars.js, Foundation and gulp. Viking Base leans on Bower to manage dependencies and gulp to build while providing a simple scaffolding script.
+Viking Base is an opinionated package intended to provide a solid starting point for building web applications. The package consists of several key components: Ember.js, Handlebars.js, Foundation and gulp. Viking Base leans on Bower to manage dependencies and gulp to build while providing a simple scaffolding script to get started.
 
 Currently, the package consists of:
 
@@ -27,7 +27,7 @@ Try out the dev build:
 
 ## gulp Targets
 
-Viking Base includes three gulp build targets: dev, prod and default (which does not need to be specified). The goals of the gulp build are:
+Viking Base includes three main gulp build targets: dev, prod and default. Note: default does not need to be specified. The goals of the gulp build are:
 
 * Compile Sass
 * Compile Handlebars templates
@@ -106,6 +106,19 @@ module.exports = function( gulp, plugins, vb, cb ) {
   cb();
 };
 ```
+
+## Other Big Changes from Version 3
+
+Some JavaScript files have been removed from the scaffolding process. These files include:
+```
+js/main.js
+js/plugins.js
+js/pre-app.js
+```
+
+The reason these files have been removed from the project is because they made too many decisions for the devloper. Things like running Foundation on DOM ready, including some polyfills and turning off Ember debugging messages.
+
+Another big change comes with the way that IE 8 grid styles were included. Previously, these styles would be included in `style.scss` but that automatically introduces some output file bloat for users of any browser if you want to support IE 8. The grid styles are still included but now they are conditionally loaded within `index.html` and a `css` build target was added for gulp to make sure they make it to the publish folder.
 
 ## References
 * [node.js](http://nodejs.org/)
