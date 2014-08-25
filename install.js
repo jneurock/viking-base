@@ -47,18 +47,6 @@ var
         to: 'hbs/application.hbs'
       }, {
         canOverride: false,
-        from: 'bower_components/viking-base/js/main.js',
-        to: 'js/main.js',
-      }, {
-        canOverride: false,
-        from: 'bower_components/viking-base/js/plugins.js',
-        to: 'js/plugins.js'
-      }, {
-        canOverride: false,
-        from: 'bower_components/viking-base/js/pre-app.js',
-        to: 'js/pre-app.js'
-      }, {
-        canOverride: false,
         from: 'bower_components/viking-base/js/app/app.js',
         to: 'js/app/app.js'
       }, {
