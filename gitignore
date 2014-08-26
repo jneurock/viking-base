@@ -13,13 +13,17 @@ Icon
 ehthumbs.db
 Thumbs.db
 
-# Bower manifest #
-##################
-.bower.json
+# Build output #
+################
+publish/
 
 # JSDoc #
 #########
 docs/
+
+# Bower packages #
+##################
+bower_components/
 
 # node.js modules #
 ###################
