@@ -3,10 +3,10 @@ Viking Base is an opinionated package intended to provide a solid starting point
 Currently, the package consists of:
 
 * Ember.js 1.7.0
-* Handlebars.js 1.1.2
 * Foundation 5.3.3
-* Modernizr 2.8.3
-* Respond 1.4.2
+* jQuery 1.11.1 (for optional IE 8 support)
+* Respond 1.4.2 (for optional IE 8 support)
+* REM Unit Polyfill 1.3.2 (for optional IE 8 support)
 
 ## Getting Started
 

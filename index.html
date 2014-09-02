@@ -43,7 +43,7 @@
 
     <!--[if lt IE 9]>
       <!-- htmlbuild:jsvendor -->
-      <script src="bower_components/viking-base/js/vendor/jquery-1.11.1.js"></script>
+      <script src="bower_components/jquery-1x/dist/jquery.js"></script>
       <!-- endbuild -->
     <![endif]-->
 
@@ -57,10 +57,16 @@
     <script src="bower_components/fastclick/lib/fastclick.js"></script>
     <script src="bower_components/foundation/js/foundation/foundation.js"></script>
     <script src="bower_components/handlebars/handlebars.runtime.js"></script>
-    <script src="bower_components/ember-starter-kit/js/libs/ember-1.7.0.js"></script>
+    <script src="bower_components/ember/ember.js"></script>
     <script src="js/templates.js"></script>
     <script src="js/app/app.js"></script>
     <!-- endbuild -->
+
+    <!--[if lt IE 9]>
+      <!-- htmlbuild:jsvendor -->
+      <script src="bower_components/REM-unit-polyfill/js/rem.js"></script>
+      <!-- endbuild -->
+    <![endif]-->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
