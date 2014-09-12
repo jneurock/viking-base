@@ -51,10 +51,6 @@ var
         to: 'js/app/app.js'
       }, {
         canOverride: false,
-        from: 'bower_components/viking-base/js/vendor/jquery-1.11.1.js',
-        to: 'js/vendor/jquery-1.11.1.js'
-      }, {
-        canOverride: false,
         from: 'bower_components/viking-base/scss/style.scss',
         to: 'scss/style.scss'
       }
