@@ -101,9 +101,6 @@ module.exports = function( gulp, plugins, vb, cb ) {
     }
   };
 
-  // Modify tasks as you need before calling vb.registerGulpTasks
-  vb.registerGulpTasks();
-
   // Calling the callback kicks off the build
   cb();
 };
