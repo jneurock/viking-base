@@ -143,7 +143,6 @@ Another big change comes with the way that IE 8 grid styles were included. Previ
 * [gulp](http://gulpjs.com/)
 * [Bower](http://bower.io/)
 * [Ember.js](http://emberjs.com/)
-* [Ember Starter Kit](https://github.com/emberjs/starter-kit)
 * [Handlebars.js](http://handlebarsjs.com/)
 * [Foundation](http://foundation.zurb.com/)
 * [JSDoc](http://usejsdoc.org/)
