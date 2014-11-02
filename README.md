@@ -114,17 +114,17 @@ Version 6 introduced the ability to extend the build from the command line in ad
 
 See `bower_components/viking-base/node_modules/viking-base/index.js` for a full API reference.
 
-## Changes from Version 5
+### Changes from Version 5
 
 There were a number of deprecated Node packages removed for version 6.
 
-## Changes from Version 4
+### Changes from Version 4
 
 Viking Base used to include the Ember Start Kit Bower package since it included Ember, Handlebars and jQuery 1.x. One issue with this approach was that references in `index.html` to Ember had version numbers attached to them and the actual Bower packages for those libraries were not included. In version 5, Ember Starter Kit was removed in favor of more cleanly separated dependencies.
 
 Another change introduced in version 5 was the REM Unit Polyfill dependency for IE 8 support. While version 4 saw the exclusion of some polyfills, it did not eliminate the conditionally loaded polyfills found in `index.html`. This is because these polyfills won't be loaded unless the user has IE 8, preventing bloated production output for all users. The REM Unit Polyfill helps ensure a decent experience with Foundation and IE 8.
 
-## Changes from Version 3
+### Changes from Version 3
 
 Some JavaScript files have been removed from the scaffolding process. These files include:
 ```
