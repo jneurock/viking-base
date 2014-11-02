@@ -1,9 +1,9 @@
 {
   "name": "viking-base",
-  "version": "5.1.1",
+  "version": "5.2.0",
   "dependencies": {
-    "ember": "1.7.0",
-    "foundation": "5.4.2",
+    "ember": "1.8.0",
+    "foundation": "5.4.7",
     "jquery-1x": "jQuery#~1.11.1",
     "respond": "~1.4.2",
     "REM-unit-polyfill": "~1.3.2"
