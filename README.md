@@ -1,10 +1,10 @@
-# Viking Base (5.1.1)
+# Viking Base (6.0.0)
 
 Viking Base is an opinionated package intended to provide a solid starting point for building web applications. The package consists of several key components: Ember.js, Handlebars.js, Foundation and gulp. Viking Base leans on Bower to manage dependencies and gulp to build while providing a simple scaffolding script to get started.
 
 Currently, the package consists of:
 
-* Ember.js 1.7.0
+* Ember.js 1.8.0
 * Foundation 5.4.2
 * jQuery 1.11.1 (for optional IE 8 support)
 * Respond 1.4.2 (for optional IE 8 support)
@@ -21,7 +21,7 @@ Install the package via Bower:
 Run the install script:  
 `node bower_components/viking-base/install`
 
-Install node.js packages:  
+Install Node.js packages:  
 `npm install`
 
 Try out the dev build:  
@@ -53,14 +53,14 @@ The `prod` build does the same thing as the `dev` build but also concatenates an
 `gulp prod`
 
 **update**  
-The `update` target is special in that it is intended to be used in front of other builds. For example: `gulp update dev`. This tells Viking Base that it should prune and install/update node.js and Bower packages. This shouldn't be necessary as part of a developer's everyday workflow unless dependency updates are expected frequently. This is a great addition, however, for a CI system.  
+The `update` target is special in that it is intended to be used in front of other builds. For example: `gulp update dev`. This tells Viking Base that it should prune and install/update Node.js and Bower packages. This shouldn't be necessary as part of a developer's everyday workflow unless dependency updates are expected frequently. This is a great addition, however, for a CI system.  
 `gulp update dev`  
 `gulp update prod`
 
 ## Extending Viking Base
 The method for extending Viking Base has changed slightly from version 3 to 4. In version 3, extending Viking Base meant updating `gulpfile.js` in your project root. This worked just fine; however, running the install script again would override your gulpfile and wipeout your customizations. In version 4, the gulpfile that ships with Viking Base now looks for a file called `viking-base.js` in your project root. The gulpfile expects `viking-base.js` to export a function that accepts 4 arguments. The 4th argument is a callback and must be called by your function. See below for a full example.
 
-The Viking Base node module provides a simple API for adding, removing or modifying gulp tasks. Every part of the gulp build is configurable. Here are the main configurable aspects of the build:
+The Viking Base Node module provides a simple API for adding, removing or modifying gulp tasks. Every part of the gulp build is configurable. Here are the main configurable aspects of the build:
 
 * gulp tasks
 * Input sources
@@ -106,13 +106,24 @@ module.exports = function( gulp, plugins, vb, cb ) {
 };
 ```
 
-## Changes from Version 4
+## Command Line Options
+
+Version 6 introduced the ability to extend the build from the command line in addition to extending via viking-base.js. For example, if you wanted the build output in a folder called dist, instead of the default publish, you could run a command like this:  
+`gulp dev --output.publish dist/`
+
+See `bower_components/viking-base/node_modules/viking-base/index.js` for a full API reference.
+
+### Changes from Version 5
+
+There were a number of deprecated Node packages removed for version 6. The .gitignore file was also updated so build output, JSDoc output and dependencies are no longer tracked.
+
+### Changes from Version 4
 
 Viking Base used to include the Ember Start Kit Bower package since it included Ember, Handlebars and jQuery 1.x. One issue with this approach was that references in `index.html` to Ember had version numbers attached to them and the actual Bower packages for those libraries were not included. In version 5, Ember Starter Kit was removed in favor of more cleanly separated dependencies.
 
 Another change introduced in version 5 was the REM Unit Polyfill dependency for IE 8 support. While version 4 saw the exclusion of some polyfills, it did not eliminate the conditionally loaded polyfills found in `index.html`. This is because these polyfills won't be loaded unless the user has IE 8, preventing bloated production output for all users. The REM Unit Polyfill helps ensure a decent experience with Foundation and IE 8.
 
-## Changes from Version 3
+### Changes from Version 3
 
 Some JavaScript files have been removed from the scaffolding process. These files include:
 ```
@@ -126,12 +137,11 @@ The reason these files have been removed from the project is because they made t
 Another big change comes with the way that IE 8 grid styles were included. Previously, these styles would be included in `style.scss` but that automatically introduces some output file bloat for users of any browser if you want to support IE 8. The grid styles are still included but now they are conditionally loaded within `index.html` and a `css` build target was added for gulp to make sure they make it to the publish folder.
 
 ## References
-* [node.js](http://nodejs.org/)
+* [Node.js](http://nodejs.org/)
 * [npm](http://npmjs.org/)
 * [gulp](http://gulpjs.com/)
 * [Bower](http://bower.io/)
 * [Ember.js](http://emberjs.com/)
-* [Ember Starter Kit](https://github.com/emberjs/starter-kit)
 * [Handlebars.js](http://handlebarsjs.com/)
 * [Foundation](http://foundation.zurb.com/)
 * [JSDoc](http://usejsdoc.org/)
