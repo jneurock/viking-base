@@ -12,3 +12,20 @@ Icon
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Build output #
+################
+js/templates.js
+publish/
+
+# JSDoc #
+#########
+docs/
+
+# Bower packages #
+##################
+bower_components/
+
+# Node.js modules #
+###################
+node_modules/
