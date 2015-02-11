@@ -113,6 +113,10 @@ Version 6 introduced the ability to extend the build from the command line in ad
 
 See `bower_components/viking-base/node_modules/viking-base/index.js` for a full API reference.
 
+### Changes from Version 6.0.0
+
+The `handlebars` build target has been deprecated. The new template target is named `htmlbars`. If you have local `viking-base.js` overrides concerning the old `handlebars` build target you should consider updating them. I decided to allow this to break to force developers to evaluate their local changes and make sure they are necessary with HTMLBars.
+
 ### Changes from Version 5
 
 There were a number of deprecated Node packages removed for version 6. The .gitignore file was also updated so build output, JSDoc output and dependencies are no longer tracked.
