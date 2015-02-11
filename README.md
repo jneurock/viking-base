@@ -75,6 +75,8 @@ In the following example, we'll add a simple image task. You will see how a new 
 Example:
 
 ```javascript
+// viking-base.js
+
 module.exports = function( gulp, plugins, vb, cb ) {
 
   // Output updates
@@ -99,6 +101,28 @@ module.exports = function( gulp, plugins, vb, cb ) {
       return gulp.src( this.sources.img )
         .pipe( gulp.dest( this.output.publish + this.output.img ) );
     }
+  };
+
+  // Calling the callback kicks off the build
+  cb();
+};
+```
+
+### Pre-Build
+
+Version 6.1.0 includes a new method that can be overridden called `preBuild`. This method is expected to return a stream and exists as a hook to process HTML before it passes into the `gulp-htmlbuild` plugin.
+
+Example:
+
+```javascript
+// viking-base.js
+
+module.exports = function( gulp, plugins, vb, cb ) {
+
+  vb.preBuild = function() {
+
+    // Replace language attribute of html tag
+    return plugins.if( vb.prod, plugins.replace('lang="en"', 'lang="fr"') );
   };
 
   // Calling the callback kicks off the build
