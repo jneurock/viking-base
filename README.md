@@ -1,4 +1,4 @@
-# Viking Base (6.1.0)
+# Viking Base (7.0.0)
 
 Viking Base is an opinionated package intended to provide a solid starting point for building web applications. The package consists of several key components: Ember.js, Foundation and gulp. Viking Base leans on Bower to manage dependencies and gulp to build while providing a simple scaffolding script to get started.
 
@@ -110,7 +110,7 @@ module.exports = function( gulp, plugins, vb, cb ) {
 
 ### Pre-Build
 
-Version 6.1.0 includes a new method that can be overridden called `preBuild`. This method is expected to return a stream and exists as a hook to process HTML before it passes into the `gulp-htmlbuild` plugin.
+Version 6.1.0 included a new method that can be overridden called `preBuild`. This method is expected to return a stream and exists as a hook to process HTML before it passes into the `gulp-htmlbuild` plugin.
 
 Example:
 
@@ -140,6 +140,8 @@ See `bower_components/viking-base/node_modules/viking-base/index.js` for a full 
 ### Changes from Version 6.0.0
 
 The `handlebars` build target has been deprecated. The new template target is named `htmlbars`. If you have local `viking-base.js` overrides concerning the old `handlebars` build target you should consider updating them. I decided to allow this to break to force developers to evaluate their local changes and make sure they are necessary with HTMLBars.
+
+The build now checks dependencies for mismatches. If it finds one it will prompt you to update them. It does this for both npm and Bower dependencies. If you'd like your build to automatically update dependencies then you can run the `udpate` task or set the option `checkDependsConfig.npm.install` or `checkDependsConfig.bower.install` to `true`.
 
 ### Changes from Version 5
 
