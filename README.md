@@ -141,7 +141,7 @@ See `bower_components/viking-base/node_modules/viking-base/index.js` for a full 
 
 The `handlebars` build target has been deprecated. The new template target is named `htmlbars`. If you have local `viking-base.js` overrides concerning the old `handlebars` build target you should consider updating them. I decided to allow this to break to force developers to evaluate their local changes and make sure they are necessary with HTMLBars.
 
-The build now checks dependencies for mismatches. If it finds one it will prompt you to update them. It does this for both npm and Bower dependencies. If you'd like your build to automatically update dependencies then you can run the `udpate` task or set the option `checkDependsConfig.npm.install` or `checkDependsConfig.bower.install` to `true`.
+The build now checks dependencies for mismatches. If it finds one it will prompt you to update them. It does this for both npm and Bower dependencies. If you'd like your build to automatically update dependencies then you can run the `udpate` task or set the option `checkDependsConfig.autoUpdate` to `true`.
 
 ### Changes from Version 5
 
