@@ -1,6 +1,6 @@
 {
   "name": "viking-base",
-  "version": "7.1.1",
+  "version": "7.2.0",
   "dependencies": {
     "ember": "1.11.1",
     "foundation": "5.4.2",
