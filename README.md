@@ -137,6 +137,10 @@ Version 6 introduced the ability to extend the build from the command line in ad
 
 See `bower_components/viking-base/node_modules/viking-base/index.js` for a full API reference.
 
+### Changes from Version 7.1.1
+
+A new build property has been added called `useProdEmber` and the Ember reference in `index.html` has been changed to `ember.debug.js` from `ember.prod.js`. This allows your application to use the debug version of Ember with the `dev` build and the production version of Ember with the `prod` build. You'll need to change the reference to Ember in your `index.html` file if you want to use this. If you don't want to use this you can set `useProdEmber` to false.
+
 ### Changes from Version 6.0.0
 
 The `handlebars` build target has been deprecated. The new template target is named `htmlbars`. If you have local `viking-base.js` overrides concerning the old `handlebars` build target you should consider updating them. I decided to allow this to break to force developers to evaluate their local changes and make sure they are necessary with HTMLBars.
