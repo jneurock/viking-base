@@ -139,7 +139,7 @@ See `bower_components/viking-base/node_modules/viking-base/index.js` for a full 
 
 ### Changes from Version 7.1.1
 
-A new build property has been added called `useProdEmber` and the Ember reference in `index.html` has been changed to `ember.debug.js` from `ember.prod.js`. This allows your application to use the debug version of Ember with the `dev` build and the production version of Ember with the `prod` build. You'll need to change the reference to Ember in your `index.html` file if you want to use this. If you don't want to use this you can set `useProdEmber` to false.
+A new build property has been added called `useProdEmber` and the Ember reference in `index.html` has been changed to `ember.debug.js` from `ember.prod.js`. This allows your application to use the debug version of Ember with the `dev` build and the production version of Ember with the `prod` build. You'll need to change the reference to Ember in your `index.html` file if you want to use this. If you don't want to use this you can set `useProdEmber` to `false`.
 
 ### Changes from Version 6.0.0
 
