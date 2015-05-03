@@ -1,11 +1,11 @@
-# Viking Base (7.2.2)
+# Viking Base (7.3.0)
 
 Viking Base is an opinionated package intended to provide a solid starting point for building web applications. The package consists of several key components: Ember.js, Foundation and gulp. Viking Base leans on Bower to manage dependencies and gulp to build while providing a simple scaffolding script to get started.
 
 Currently, the package consists of:
 
 * Ember.js 1.11.3
-* Foundation 5.4.2
+* Foundation 5.5.2
 * jQuery 1.11.2 (for optional IE 8 support)
 * Respond 1.4.2 (for optional IE 8 support)
 * REM Unit Polyfill 1.3.2 (for optional IE 8 support)
@@ -26,6 +26,10 @@ Install Node.js packages:
 
 Try out the dev build:  
 `gulp dev`
+
+## Known Issues
+
+The `gulp-htmlbars` package depends on the `ember-cli-htmlbars` package which depends on the `broccoli-filter` package. The current version of `broccoli-filter` throws an error that prevents the build from completing. To avoid this, cd into `node_modules/gulp-htmlbars/node_modules/ember-cli-htmlbars` and run `npm install broccoli-filter@0.1.6`. If you are working with a team or CI environment, consider running `npm shrinkwrap --dev` to preserve the specific version of `broccoli-filter`.
 
 ## gulp Targets
 
