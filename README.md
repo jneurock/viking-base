@@ -1,4 +1,4 @@
-# Viking Base (7.5.0)
+# Viking Base (7.5.1)
 
 Note: This package will probably be retired after Ember 1.13 is released. I will more than likely stop updating this when Ember 2.0 comes around.
 
@@ -6,7 +6,7 @@ Viking Base is an opinionated package intended to provide a solid starting point
 
 Currently, the package consists of:
 
-* Ember.js 1.13.0
+* Ember.js 1.13.4
 * Foundation 5.5.2
 * jQuery 1.11.2 (for optional IE 8 support)
 * Respond 1.4.2 (for optional IE 8 support)
