@@ -1,4 +1,4 @@
-# Viking Base (7.5.1)
+# Viking Base (7.5.2)
 
 Note: This package will probably be retired after Ember 1.13 is released. I will more than likely stop updating this when Ember 2.0 comes around.
 
