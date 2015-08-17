@@ -1,8 +1,8 @@
 {
   "name": "viking-base",
-  "version": "7.5.2",
+  "version": "7.5.3",
   "dependencies": {
-    "ember": "1.13.4",
+    "ember": "1.13.8",
     "foundation": "5.5.2",
     "jquery-1x": "jQuery#~1.11.2",
     "respond": "~1.4.2",
